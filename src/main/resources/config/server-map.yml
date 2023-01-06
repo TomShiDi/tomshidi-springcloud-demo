@@ -1,0 +1,10 @@
+server-map:
+  old-new-name-map:
+    fdn-schema: fdn-log-schema-scheduler
+    fdn-log: fdn-log-schema-scheduler
+    fdn-scheduler: fdn-log-schema-scheduler
+    bpms-externalform: bpms-externalform-integration
+    bpms-integration: bpms-externalform-integration
+    bpms-appstore: bpms-appstore-repo-operation
+    bpms-repository: bpms-appstore-repo-operation
+    bpms-operation: bpms-appstore-repo-operation
