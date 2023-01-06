@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="remoRmiService" class="com.tomshidi.demo.provider.service.impl.DemoRmiServiceImpl"/>
+    <bean id="demoRmi" class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="service" ref="remoRmiService"/>
+        <property name="serviceName" value="springRmi"/>
+        <property name="serviceInterface" value="com.tomshidi.demo.interfaces.service.IDemoRmiService"/>
+        <property name="registryPort" value="9999"/>
+    </bean>
+</beans>

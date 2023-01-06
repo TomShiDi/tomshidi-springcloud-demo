@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: dev
+  cloud:
+#    bootstrap:
+#      enabled: true
+    nacos:
+      config:
+        server-addr: 192.168.83.145:8848
+        namespace: 919a3e6a-d395-405c-adad-11a9b35b09f7
+        extension-configs:
+          - data-id: tomshidi-test-config.yaml
+            refresh: true
+          - data-id: log-level.yaml
+            refresh: true
+logging:
+  config: classpath:logback-logstash.xml
+  # config: http://${spring.cloud.nacos.config.server-addr}/nacos/v1/cs/configs?group=DEFAULT_GROUP&tenant=${spring.cloud.nacos.config.namespace}&dataId=logback-nacos.xml
+  logstash:
+    enable: false
+    file: ${spring.application.name}.log
+    host: 192.168.83.55
+    port: 9250
