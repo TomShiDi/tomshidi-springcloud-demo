@@ -1,6 +1,6 @@
 package com.tomshidi.demo.controller;
 
-import com.tomshidi.demo.config.ValueConfig;
+import com.tomshidi.demo.config.NacosRefreshableConfig;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,11 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/config")
 public class ConfigController implements ApplicationContextAware {
 
-    @Value("${test-config.name:}")
-    private String name;
-
     @Autowired
-    private ValueConfig valueConfig;
+    private NacosRefreshableConfig nacosRefreshableConfig;
 
     private ApplicationContext context;
 
@@ -32,7 +29,6 @@ public class ConfigController implements ApplicationContextAware {
 
     @RequestMapping("/getConfig")
     public String getConfig() {
-        valueConfig.getName();
-        return name;
+        return nacosRefreshableConfig.getName();
     }
 }
