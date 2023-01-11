@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Scope;
  * @author tomshidi
  * @date 2022/1/23 16:12
  */
-//@ComponentInterface
+//@Component
 @Scope(scopeName = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class CircularReferenceA {
     private CircularReferenceB circularReferenceB;
