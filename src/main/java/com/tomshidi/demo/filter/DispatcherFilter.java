@@ -16,7 +16,7 @@ import java.io.IOException;
  * @date 2021/10/11 15:38
  */
 @WebFilter(urlPatterns = {"*"})
-//@ComponentInterface
+//@Component
 public class DispatcherFilter implements Filter {
 
     private static Logger logger = LoggerFactory.getLogger(DispatcherFilter.class);

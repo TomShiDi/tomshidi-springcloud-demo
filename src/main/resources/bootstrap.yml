@@ -5,6 +5,10 @@ spring:
 #    bootstrap:
 #      enabled: true
     nacos:
+      discovery:
+        enabled: false
+        server-addr: 192.168.83.145:8848
+        namespace: 919a3e6a-d395-405c-adad-11a9b35b09f7
       config:
         server-addr: 192.168.83.145:8848
         namespace: 919a3e6a-d395-405c-adad-11a9b35b09f7
