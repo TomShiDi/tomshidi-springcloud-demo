@@ -10,13 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -35,16 +33,12 @@ public class DemoApplication {
         this.component = component;
     }
 
-    public static void main(String[] args) throws InterruptedException, URISyntaxException {
+    public static void main(String[] args) throws URISyntaxException {
         SpringApplication.run(DemoApplication.class, args);
         ApplicationContext applicationContext = ApplicationContextHolder.getApplicationContext();
         HttpFeignClient feignClient = applicationContext.getBean(HttpFeignClient.class);
-        String s = feignClient.get(new URI("https://www.baidu.com"), new HashMap<>(0));
+        String s = feignClient.get(new URI("https://kunpeng.csdn.net/ad/json/integrate/list?positions=932"), new HashMap<>(0));
         LOGGER.info("feign远程调用结果为：{}", s);
-        while (true) {
-            LOGGER.info("************* 日志打印 ******************");
-            TimeUnit.SECONDS.sleep(2);
-        }
     }
 
 }

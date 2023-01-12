@@ -1,5 +1,6 @@
 package com.tomshidi.demo.client;
 
+import com.tomshidi.demo.config.DisableLoadBalanceConfiguration;
 import feign.Body;
 import feign.Headers;
 import feign.Param;
@@ -7,7 +8,6 @@ import feign.QueryMap;
 import feign.RequestLine;
 import feign.Response;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,7 +18,7 @@ import java.util.Map;
  * @author tangshili
  * @date 2023/1/11 16:09
  */
-@FeignClient(name = "httpFeignClient", fallback = HttpFeignClientFallback.class)
+@FeignClient(name = "httpFeignClient", fallback = HttpFeignClientFallback.class, configuration = DisableLoadBalanceConfiguration.class)
 public interface HttpFeignClient {
 
     @RequestLine("GET")
