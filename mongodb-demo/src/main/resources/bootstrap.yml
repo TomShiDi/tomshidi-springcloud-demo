@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://xxx:xxxxxx@124.223.x.x:27017/tomshidi
+  #      host: 124.223.x.x
+  #      port: 27017
+  #      database: tomshidi
+  #      username: xxx
+  #      password: xxxxxx

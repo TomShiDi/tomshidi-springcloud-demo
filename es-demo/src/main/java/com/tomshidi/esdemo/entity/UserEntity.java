@@ -1,4 +1,4 @@
-package com.tomshidi.demo.entity;
+package com.tomshidi.esdemo.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;

@@ -28,11 +28,6 @@ spring:
     # 静态资源访问路径前缀
     static-path-pattern: /static/**
 
-  elasticsearch:
-    uris: http://124.223.71.119:9200
-    username:
-    password:
-
 logging:
   level:
 #    root: debug
