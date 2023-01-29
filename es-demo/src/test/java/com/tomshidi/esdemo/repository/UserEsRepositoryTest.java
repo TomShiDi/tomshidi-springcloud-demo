@@ -1,8 +1,9 @@
-package com.tomshidi.demo.repository;
+package com.tomshidi.esdemo.repository;
 
-import com.tomshidi.demo.entity.UserEntity;
+import com.tomshidi.esdemo.entity.UserEntity;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,8 +12,6 @@ import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.Query;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author tomshidi
@@ -34,7 +33,7 @@ class UserEsRepositoryTest {
         userEntity.setAge(3);
         userEntity.setAddress("非洲");
         UserEntity result = userEsRepository.save(userEntity);
-        assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test

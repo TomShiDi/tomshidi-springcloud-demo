@@ -1,0 +1,5 @@
+spring:
+  elasticsearch:
+    uris: http://124.223.xx.xxx:9200
+    username:
+    password:

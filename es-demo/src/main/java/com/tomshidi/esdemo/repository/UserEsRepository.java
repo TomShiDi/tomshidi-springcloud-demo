@@ -1,6 +1,6 @@
-package com.tomshidi.demo.repository;
+package com.tomshidi.esdemo.repository;
 
-import com.tomshidi.demo.entity.UserEntity;
+import com.tomshidi.esdemo.entity.UserEntity;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 

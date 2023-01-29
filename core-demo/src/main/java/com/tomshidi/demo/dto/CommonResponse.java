@@ -5,24 +5,24 @@ package com.tomshidi.demo.dto;
  * @date 2023/1/13 16:29
  */
 public class CommonResponse<T> {
-    private String status;
+    private Integer code;
 
     private String message;
 
     private T data;
 
-    public CommonResponse(String status, String message, T data) {
-        this.status = status;
+    public CommonResponse(Integer code, String message, T data) {
+        this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    public String getStatus() {
-        return status;
+    public Integer getCode() {
+        return code;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
     public String getMessage() {
@@ -44,9 +44,13 @@ public class CommonResponse<T> {
     @Override
     public String toString() {
         return "CommonResponse{" +
-                "status='" + status + '\'' +
+                "code='" + code + '\'' +
                 ", message='" + message + '\'' +
                 ", data=" + data +
                 '}';
+    }
+
+    public static CommonResponse<Object> SUCCESS() {
+        return new CommonResponse<>(0, "执行成功", null);
     }
 }

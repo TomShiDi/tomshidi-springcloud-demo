@@ -7,6 +7,8 @@
         <module>rpc-service-provider</module>
         <module>interface</module>
         <module>rpc-consumer</module>
+        <module>es-demo</module>
+        <module>mongodb-demo</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -53,6 +55,12 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
