@@ -1,4 +1,4 @@
-package com.tomshidi.demo;
+package com.tomshidi.demo.dto;
 
 /**
  * @author tomshidi
