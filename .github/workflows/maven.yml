@@ -28,7 +28,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -B -DstipTests package --file pom.xml
+      run: mvn -B -DskipTests package --file pom.xml
     - name: Run Application
       run: java -jar core-demo\target\core-demo-1.0.0.jar
 
