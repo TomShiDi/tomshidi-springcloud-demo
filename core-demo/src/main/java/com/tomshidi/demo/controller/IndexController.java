@@ -1,6 +1,6 @@
 package com.tomshidi.demo.controller;
 
-import com.tomshidi.demo.AccountEntity;
+import com.tomshidi.demo.dto.AccountEntity;
 import com.tomshidi.demo.interceptor.ServerMapInterceptor;
 import com.tomshidi.demo.threadpool.DefaultThreadPool;
 import com.tomshidi.demo.threads.DemoThread;
