@@ -71,7 +71,7 @@ jobs:
       # 打印当前目录文件列表情况
       - name: Print directory
         id: print-dic
-        run: ls
+        run: pwd && ls
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
