@@ -78,9 +78,9 @@ jobs:
           images: ${{ env.REGISTRY }}/tomshidi/${{ env.IMAGE_NAME }}
       
       # 打印当前目录文件列表情况
-      - name: Print directory
+      - name: Print directory core-demo
         id: print-dic
-        run: pwd && ls
+        run: pwd && ls core-demo
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
