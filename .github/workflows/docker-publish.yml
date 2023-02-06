@@ -97,7 +97,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Test Docker Image
-        run: docker run --rm ${{ steps.meta.outputs.tags }}
+        run: |
+          docker run --rm ${{ steps.meta.outputs.tags }}
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
