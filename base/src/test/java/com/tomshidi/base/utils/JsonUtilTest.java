@@ -45,7 +45,7 @@ class JsonUtilTest {
                 "    ]\n" +
                 "}";
         String depthPattern = "[person][0][age]";
-        Double valueByDepthPattern = JsonUtil.getValueByDepthPattern(sourceJson, depthPattern, double.class);
+        Double valueByDepthPattern = JsonUtil.getValueByDepthPattern(sourceJson, depthPattern);
         assertNotEquals(0, valueByDepthPattern.intValue());
     }
 

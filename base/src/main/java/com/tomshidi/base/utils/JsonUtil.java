@@ -48,16 +48,15 @@ public class JsonUtil {
      * @param depthPattern       层级深度表达式
      *                           例如：[person][tomshidi][age]
      *                           支持数组获取：[person][0][age]
-     * @param returnTypeInstance 方法返回值类型。即：你想要获取的value值类型
      * @param <T>                返回值泛型
      * @return 指定深度key对应的value
      */
-    public static <T> T getValueByDepthPattern(String sourceJson, String depthPattern, Class<T> returnTypeInstance) {
+    public static <T> T getValueByDepthPattern(String sourceJson, String depthPattern) {
         // 替换json字符串中的空白字符以及换行符，本方案可不做；
 //        sourceJson = replaceBlank(sourceJson);
         Object jsonObject = GSON.fromJson(sourceJson, new TypeToken<Map<String, Object>>() {
         }.getType());
-        return getValueByDepthPattern(jsonObject, depthPattern, returnTypeInstance);
+        return getValueByDepthPattern(jsonObject, depthPattern);
     }
 
     /**
@@ -67,12 +66,11 @@ public class JsonUtil {
      * @param depthPattern       层级深度表达式
      *                           例如：[person][tomshidi][age]
      *                           支持数组获取：[person][0][age]
-     * @param returnTypeInstance 方法返回值类型。即：你想要获取的value值类型
      * @param <T>                返回值泛型
      * @return 指定深度key对应的value
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getValueByDepthPattern(Object sourceJson, String depthPattern, Class<T> returnTypeInstance) {
+    public static <T> T getValueByDepthPattern(Object sourceJson, String depthPattern) {
         List<String> depthList = getDepthList(depthPattern);
         if (depthList.isEmpty()) {
             return null;
