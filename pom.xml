@@ -9,6 +9,8 @@
         <module>rpc-consumer</module>
         <module>es-demo</module>
         <module>mongodb-demo</module>
+        <module>model</module>
+        <module>base</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

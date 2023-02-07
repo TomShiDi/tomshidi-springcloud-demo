@@ -1,7 +1,7 @@
-package com.tomshidi.demo.dto;
+package com.tomshidi.base.dto;
 
 /**
- * @author tangshili
+ * @author tomshidi
  * @date 2023/1/13 16:29
  */
 public class CommonResponse<T> {

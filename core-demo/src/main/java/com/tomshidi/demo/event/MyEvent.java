@@ -3,7 +3,7 @@ package com.tomshidi.demo.event;
 import org.springframework.context.ApplicationEvent;
 
 /**
- * @author tangshili
+ * @author tomshidi
  * @date 2023/1/12 17:04
  */
 public class MyEvent extends ApplicationEvent {

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * feign远程请求发起客户端，不使用负载均衡
- * @author tangshili
+ * @author tomshidi
  * @date 2023/1/12 15:50
  */
 @Configuration

@@ -1,7 +1,8 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://xxx:xxxxxx@124.223.x.x:27017/tomshidi
+      uri: mongodb://192.168.83.55:27017/test
+      auto-index-creation: true
   #      host: 124.223.x.x
   #      port: 27017
   #      database: tomshidi

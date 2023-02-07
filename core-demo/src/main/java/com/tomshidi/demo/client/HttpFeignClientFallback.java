@@ -9,7 +9,7 @@ import java.net.URI;
 import java.util.Map;
 
 /**
- * @author tangshili
+ * @author tomshidi
  * @date 2023/1/11 16:22
  */
 public class HttpFeignClientFallback implements HttpFeignClient {

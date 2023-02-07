@@ -2,10 +2,10 @@ package com.tomshidi.demo.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.tomshidi.demo.dto.CommonResponse;
-import com.tomshidi.demo.dto.ExceptionResponse;
-import com.tomshidi.demo.enums.BaseExceptionEnum;
-import com.tomshidi.demo.exceptions.BaseException;
+import com.tomshidi.base.dto.CommonResponse;
+import com.tomshidi.base.dto.ExceptionResponse;
+import com.tomshidi.base.enums.BaseExceptionEnum;
+import com.tomshidi.base.exceptions.BaseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;

@@ -1,4 +1,4 @@
-package com.tomshidi.demo.enums;
+package com.tomshidi.base.enums;
 
 /**
  * @author tomshidi
@@ -9,6 +9,7 @@ public enum BaseExceptionEnum {
      * 异常类型枚举
      */
     COMMON_EXCEPTION(-1, "通用异常"),
+    RECORD_DATA_NOT_FOUND(1001, "数据不存在"),
     ;
 
     private Integer code;

@@ -12,6 +12,11 @@
     <artifactId>core-demo</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>com.tomshidi</groupId>
+            <artifactId>base</artifactId>
+            <version>${version}</version>
+        </dependency>
 
         <!--        <dependency>-->
         <!--            <groupId>org.apache.logging.log4j</groupId>-->

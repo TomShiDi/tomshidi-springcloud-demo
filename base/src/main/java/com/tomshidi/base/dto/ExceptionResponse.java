@@ -1,6 +1,7 @@
-package com.tomshidi.demo.dto;
+package com.tomshidi.base.dto;
 
-import com.tomshidi.demo.exceptions.BaseException;
+
+import com.tomshidi.base.exceptions.BaseException;
 
 /**
  * @author tomshidi

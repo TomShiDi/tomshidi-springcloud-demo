@@ -1,6 +1,7 @@
-package com.tomshidi.demo.exceptions;
+package com.tomshidi.base.exceptions;
 
-import com.tomshidi.demo.enums.BaseExceptionEnum;
+
+import com.tomshidi.base.enums.BaseExceptionEnum;
 
 /**
  * @author tomshidi

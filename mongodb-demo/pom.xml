@@ -13,6 +13,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.tomshidi</groupId>
+            <artifactId>base</artifactId>
+            <version>${version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
