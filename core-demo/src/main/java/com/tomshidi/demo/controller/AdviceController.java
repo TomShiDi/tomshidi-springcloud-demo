@@ -1,7 +1,7 @@
 package com.tomshidi.demo.controller;
 
+import com.tomshidi.base.dto.CommonResponse;
 import com.tomshidi.demo.config.TomshidiConfig;
-import com.tomshidi.demo.dto.CommonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
