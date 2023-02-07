@@ -8,4 +8,11 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>base</artifactId>
     <name>公共包</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+    </dependencies>
 </project>
