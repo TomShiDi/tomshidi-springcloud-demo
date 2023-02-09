@@ -98,7 +98,7 @@ jobs:
           cache-to: type=gha,mode=max
       - name: Test Docker Image
         run: |
-          docker run -d --rm -p 8090:8090 --name tomshidi-demo ${{ steps.meta.outputs.tags }} && sleep 20 && curl -v http://localhost:8090
+          docker run -d --rm -p 8090:8090 --name tomshidi-demo ${{ steps.meta.outputs.tags }} && sleep 20 && curl -v http://localhost:8090/actuator/health
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
