@@ -56,16 +56,16 @@ public class TreePathTableServiceImpl implements TreePathTableService {
         List<TreePathTable> treePathTableList = new ArrayList<>(parentTreePathList.size() + 1);
         TreePathTable treePathTable;
         for (TreePathTable t : parentTreePathList) {
-            treePathTable = new TreePathTable();
-            treePathTable.setAncestor(t.getAncestor());
-            treePathTable.setDescendant(nodeId);
-            treePathTable.setDistance(t.getDistance() + 1);
+            treePathTable = new TreePathTable()
+                    .setAncestor(t.getAncestor())
+                    .setDescendant(nodeId)
+                    .setDistance(t.getDistance() + 1);
             treePathTableList.add(treePathTable);
         }
-        treePathTable = new TreePathTable();
-        treePathTable.setAncestor(nodeId);
-        treePathTable.setDescendant(nodeId);
-        treePathTable.setDistance(0);
+        treePathTable = new TreePathTable()
+                .setAncestor(nodeId)
+                .setDescendant(nodeId)
+                .setDistance(0);
         treePathTableList.add(treePathTable);
         treePathTableMapper.insertMore(treePathTableList);
     }
@@ -78,12 +78,20 @@ public class TreePathTableServiceImpl implements TreePathTableService {
             return;
         }
         Map<String, Object> childTree = new HashMap<>(2);
+        // 临时保存子节点层级结构
         buildChildTree(nodeId, childTree);
         List<String> allChildIdList = treePathTableMapper.findChildNodeIds(nodeId);
+        // 删除所有子节点路径数据
         treePathTableMapper.deleteByDescendants(allChildIdList);
+        // 重新将子节点添加到新的父节点上
         reInsertPreChildNode(childTree, newParentNodeId);
     }
 
+    /**
+     * 重新添加树形层级记录
+     * @param childTree 子树数据
+     * @param newParentNodeId 子树要添加到的父节点
+     */
     private void reInsertPreChildNode(Map<String, Object> childTree, String newParentNodeId) {
         for (Map.Entry<String, Object> entry : childTree.entrySet()) {
             addNode(entry.getKey(), newParentNodeId);
@@ -97,7 +105,6 @@ public class TreePathTableServiceImpl implements TreePathTableService {
      * 构造节点树形结构
      *
      * @param currNode 当前节点
-     * @return 树状map
      */
     private void buildChildTree(String currNode, Map<String, Object> resultMap) {
         List<String> closestChildNodeIds = treePathTableMapper.findClosestChildNodeIds(currNode);

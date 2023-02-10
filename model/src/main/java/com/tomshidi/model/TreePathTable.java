@@ -15,23 +15,26 @@ public class TreePathTable {
         return ancestor;
     }
 
-    public void setAncestor(String ancestor) {
+    public TreePathTable setAncestor(String ancestor) {
         this.ancestor = ancestor;
+        return this;
     }
 
     public String getDescendant() {
         return descendant;
     }
 
-    public void setDescendant(String descendant) {
+    public TreePathTable setDescendant(String descendant) {
         this.descendant = descendant;
+        return this;
     }
 
     public int getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public TreePathTable setDistance(int distance) {
         this.distance = distance;
+        return this;
     }
 }

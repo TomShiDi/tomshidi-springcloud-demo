@@ -42,8 +42,8 @@ class TreePathTableServiceTest {
     }
 
     @Test
-    void updateNode() {
-        treePathTableService.changeNodeParent("1","4");
+    void changeNodeParent() {
+        treePathTableService.changeNodeParent("1","0");
     }
 
     @Test
