@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>es-demo</artifactId>
+    <name>es功能模块</name>
 
     <dependencies>
         <dependency>

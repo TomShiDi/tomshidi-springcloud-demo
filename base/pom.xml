@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>base</artifactId>
-    <name>公共包</name>
+    <name>基础能力模块</name>
 
     <dependencies>
         <dependency>
