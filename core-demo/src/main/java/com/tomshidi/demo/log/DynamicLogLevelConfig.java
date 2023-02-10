@@ -1,4 +1,4 @@
-package com.tomshidi.demo.config;
+package com.tomshidi.demo.log;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
  */
 @Component
 @ConfigurationProperties(prefix = "tomshidi.log", ignoreInvalidFields = false)
-public class LogLevelConfig {
+public class DynamicLogLevelConfig {
 
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LogLevelConfig.class);
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(DynamicLogLevelConfig.class);
 
     private static final String ROOT_LOGGER_NAME = "ROOT";
 
