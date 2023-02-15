@@ -3,14 +3,14 @@
 <mapper namespace="com.tomshidi.mybatis.mapper.TreePathTableMapper">
     <insert id="insert" parameterType="com.tomshidi.model.TreePathTable">
         insert into tree_path_table (ancestor, descendant, distance)
-        values (${treePathTable.ancestor}, ${treePathTable.descendant}, ${treePathTable.distance});
+        values (#{treePathTable.ancestor}, #{treePathTable.descendant}, #{treePathTable.distance});
     </insert>
 
     <insert id="insertMore" parameterType="com.tomshidi.model.TreePathTable">
         insert into tree_path_table (ancestor, descendant, distance)
         values
         <foreach collection="list" item="treePathTable" separator=",">
-            (${treePathTable.ancestor}, ${treePathTable.descendant}, ${treePathTable.distance})
+            (#{treePathTable.ancestor}, #{treePathTable.descendant}, #{treePathTable.distance})
         </foreach>
         ;
     </insert>
@@ -19,7 +19,7 @@
         <foreach collection="descendantList" item="d" separator=";">
             update tree_path_table set distance = distance - 1 where descendant = ${d} and ancestor in
             <foreach collection="ancestorList" item="a" open="(" close=")" separator=",">
-                ${a}
+                #{a}
             </foreach>
         </foreach>
         ;
@@ -28,7 +28,7 @@
     <delete id="deleteByDescendants" parameterType="String">
         delete from tree_path_table where descendant in
         <foreach collection="descendantList" item="item" separator="," open="(" close=")">
-            ${item}
+            #{item}
         </foreach>
         ;
     </delete>
@@ -36,54 +36,54 @@
     <delete id="deleteByAncestors">
         delete from tree_path_table where ancestor in
         <foreach collection="ancestorList" item="a" open="(" close=")" separator=",">
-            ${a}
+            #{a}
         </foreach>
     </delete>
 
     <select id="findChildNodeIds" resultType="String">
         select t.descendant
         from tree_path_table t
-        where t.ancestor = ${currNodeId}
+        where t.ancestor = #{currNodeId}
         order by t.distance;
     </select>
 
     <select id="findChildTreePath" resultType="com.tomshidi.model.TreePathTable">
         select t.ancestor, t.descendant, t.distance
         from tree_path_table t
-        where t.ancestor = ${currNodeId};
+        where t.ancestor = #{currNodeId};
     </select>
 
     <select id="findChildNodeIdByDistance" resultType="String">
         select t.descendant
         from tree_path_table t
-        where t.ancestor = ${currNodeId}
-          and t.distance = ${distance};
+        where t.ancestor = #{currNodeId}
+          and t.distance = #{distance};
     </select>
 
     <select id="findClosestChildNodeIds" resultType="String">
         select t.descendant
         from tree_path_table t
-        where t.ancestor = ${currNodeId}
+        where t.ancestor = #{currNodeId}
           and t.distance = 1;
     </select>
 
     <select id="findAllParentNodeIds" resultType="String">
         select t.ancestor
         from tree_path_table t
-        where t.descendant = ${currNodeId}
+        where t.descendant = #{currNodeId}
           and t.distance > 0;
     </select>
 
     <select id="findClosestParentNodeId" resultType="String">
         select t.ancestor
         from tree_path_table t
-        where t.descendant = ${currNodeId}
+        where t.descendant = #{currNodeId}
           and t.distance = 1;
     </select>
 
     <select id="findAllParentTreePath" resultType="com.tomshidi.model.TreePathTable">
         select t.ancestor, t.descendant, t.distance
         from tree_path_table t
-        where t.descendant = ${currNodeId};
+        where t.descendant = #{currNodeId};
     </select>
 </mapper>
