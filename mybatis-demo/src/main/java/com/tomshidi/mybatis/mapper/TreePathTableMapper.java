@@ -7,20 +7,29 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
+ * 节点路径信息操作
  * @author tomshidi
  * @date 2023/2/8 13:47
  */
 @Mapper
 public interface TreePathTableMapper {
 
+    /**
+     * 添加一条数据
+     * @param treePathTable 路径数据
+     */
     void insert(@Param("treePathTable") TreePathTable treePathTable);
 
+    /**
+     * 批量添加
+     * @param list 数据集
+     */
     void insertMore(@Param("list") List<TreePathTable> list);
 
     /**
-     * 更新
-     * @param descendantList
-     * @param ancestorList
+     * 将指定节点到父节点的距离减一
+     * @param descendantList 子节点列表
+     * @param ancestorList 父节点列表
      */
     void reduceOneDistance(@Param("descendantList") List<String> descendantList, @Param("ancestorList") List<String> ancestorList);
 

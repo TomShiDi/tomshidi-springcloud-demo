@@ -4,15 +4,31 @@ package com.tomshidi.mybatis.service;
 import java.util.List;
 
 /**
+ * 节点路径信息操作
  * @author tomshidi
  * @date 2023/2/8 14:45
  */
 public interface TreePathTableService {
 
+    /**
+     * 查找所有的子节点
+     * @param currNodeId 当前节点
+     * @return 子节点列表
+     */
     List<String> findChildNodeIds(String currNodeId);
 
+    /**
+     * 查找最近一级的子节点列表
+     * @param currNodeId 当前节点
+     * @return 最近一级子节点列表
+     */
     List<String> findClosestChildNodeIds(String currNodeId);
 
+    /**
+     * 查找最近的父节点
+     * @param currNodeId 当前节点
+     * @return 最近的父节点
+     */
     String findClosestParentNodeId(String currNodeId);
 
     /**
