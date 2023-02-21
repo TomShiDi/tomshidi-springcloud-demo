@@ -70,8 +70,9 @@
     <select id="findAllParentNodeIds" resultType="String">
         select t.ancestor
         from tree_path_table t
-        where t.descendant = #{currNodeId}
-          and t.distance > 0;
+        where t.descendant = ${currNodeId}
+          and t.distance > 0
+        order by t.distance desc;
     </select>
 
     <select id="findClosestParentNodeId" resultType="String">

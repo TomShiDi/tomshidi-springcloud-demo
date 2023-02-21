@@ -73,7 +73,9 @@ public interface TreePathTableMapper {
     String findClosestParentNodeId(@Param("currNodeId") String currNodeId);
 
     /**
-     * 查找所有父节点id
+     * 查找所有父节点id，返回的列表元素按照由远及近排列
+     * 例如：6节点的父节点是3，3节点的父节点是1，1节点的父节点是0
+     * 那么6节点调用该方法返回的列表即为：[0,1,3]
      * @param currNodeId 当前节点
      * @return 父节点id列表
      */
