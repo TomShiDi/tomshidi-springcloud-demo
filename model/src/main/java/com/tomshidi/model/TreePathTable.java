@@ -1,9 +1,12 @@
 package com.tomshidi.model;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 /**
  * @author tomshidi
  * @date 2023/2/8 13:50
  */
+@TableName(value = "tree_path_table")
 public class TreePathTable {
     private String ancestor;
 
