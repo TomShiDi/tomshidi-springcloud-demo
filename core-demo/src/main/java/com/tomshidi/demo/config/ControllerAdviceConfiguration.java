@@ -107,7 +107,7 @@ public class ControllerAdviceConfiguration implements ResponseBodyAdvice<Object>
         logMap.put("User-Agent", request.getHeader("User-Agent"));
 
         LOGGER.info("接收请求:\n" + GSON.toJson(logMap) + "\n参数内容:\n" + params);
-        return null;
+        return body;
     }
 
     @Override
