@@ -1,5 +1,6 @@
 package com.tomshidi.demo.controller;
 
+import com.tomshidi.base.enums.TestEnum;
 import com.tomshidi.demo.dto.AccountEntity;
 import com.tomshidi.demo.interceptor.ServerMapInterceptor;
 import com.tomshidi.demo.threadpool.DefaultThreadPool;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -150,4 +152,9 @@ public class IndexController {
         return String.format("filePath=%s\nnum1=%s\nnum2=%s\nnum3=%s\n", filePath, num1, num2, num3);
     }
 
+    @GetMapping("/enum")
+    public String enumParamAutoConstruct(@RequestParam TestEnum testEnum,
+                                         @RequestParam String name) {
+        return testEnum.getParam();
+    }
 }
