@@ -77,7 +77,8 @@ public class IndexController {
     }
 
     @RequestMapping("/complex.do")
-    public String complexObjectResolve(@RequestBody AccountEntity accountEntity, HttpServletRequest request) {
+    public String complexObjectResolve(@RequestBody AccountEntity accountEntity,
+                                       @RequestParam(name = "age") Integer age) {
         return accountEntity.toString();
     }
 
