@@ -19,7 +19,7 @@ import java.util.HashMap;
 /**
  *
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.tomshidi")
 @ServletComponentScan
 public class DemoApplication {
 

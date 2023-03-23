@@ -1,5 +1,6 @@
 package com.tomshidi.demo.controller;
 
+import com.tomshidi.base.encrypt.annotation.Encrypt;
 import com.tomshidi.base.enums.TestEnum;
 import com.tomshidi.demo.dto.AccountEntity;
 import com.tomshidi.demo.interceptor.ServerMapInterceptor;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +32,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -157,5 +161,23 @@ public class IndexController {
     public String enumParamAutoConstruct(@RequestParam TestEnum testEnum,
                                          @RequestParam String name) {
         return testEnum.getParam();
+    }
+
+    @PostMapping("/encrypt1")
+    public String encrypt1(@RequestBody @Encrypt AccountEntity accountEntity,
+                           @RequestParam @Encrypt String name) {
+        return String.format("name: %s\n%s", name, accountEntity);
+    }
+
+    @PostMapping("/encrypt2")
+    public String encrypt2(@RequestBody @Encrypt(targetType = AccountEntity.class) Map<String, Object> accountEntity,
+                           @RequestParam @Encrypt String name) {
+        return String.format("name: %s\n%s", name, accountEntity);
+    }
+
+    @PostMapping("/encrypt3")
+    public String encrypt3(@RequestBody @Encrypt(targetName = "number", targetType = AccountEntity.class) Set<String> accountList,
+                           @RequestParam String name) {
+        return String.format("name: %s\n%s", name, accountList);
     }
 }

@@ -1,12 +1,17 @@
 package com.tomshidi.demo.dto;
 
+import com.tomshidi.base.encrypt.annotation.Encrypt;
+
 /**
  * @author tomshidi
  * @date 2021/10/11 18:19
  */
 public class AccountEntity {
+
+    @Encrypt
     private String number;
 
+    @Encrypt
     private String password;
 
     public String getNumber() {

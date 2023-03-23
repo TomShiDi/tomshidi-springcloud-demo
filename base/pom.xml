@@ -7,12 +7,17 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>base</artifactId>
-    <name>基础能力模块</name>
+    <name>base基础能力模块</name>
 
     <dependencies>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
