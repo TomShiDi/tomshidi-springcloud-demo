@@ -165,13 +165,13 @@ public class IndexController {
 
     @PostMapping("/encrypt1")
     public String encrypt1(@RequestBody @Encrypt AccountEntity accountEntity,
-                           @RequestParam @Encrypt String name) {
+                           @RequestParam @Encrypt(targetType = AccountEntity.class, targetName = "number") String name) {
         return String.format("name: %s\n%s", name, accountEntity);
     }
 
     @PostMapping("/encrypt2")
     public String encrypt2(@RequestBody @Encrypt(targetType = AccountEntity.class) Map<String, Object> accountEntity,
-                           @RequestParam @Encrypt String name) {
+                           @RequestParam @Encrypt(targetType = AccountEntity.class, targetName = "number") String name) {
         return String.format("name: %s\n%s", name, accountEntity);
     }
 
@@ -184,7 +184,7 @@ public class IndexController {
     @PostMapping("/decrypt1")
     @Encrypt(enOrDecrypt = false)
     public AccountEntity decrypt1(@RequestBody @Encrypt AccountEntity accountEntity,
-                                  @RequestParam @Encrypt String name) {
+                                  @RequestParam @Encrypt(targetType = AccountEntity.class, targetName = "number") String name) {
         LOGGER.info("入参值为：{}", String.format("name: %s\n%s", name, accountEntity));
         return accountEntity;
     }
@@ -192,7 +192,7 @@ public class IndexController {
     @PostMapping("/decrypt2")
     @Encrypt(targetType = AccountEntity.class, enOrDecrypt = false)
     public Map<String, Object> decrypt2(@RequestBody @Encrypt(targetType = AccountEntity.class) Map<String, Object> accountEntity,
-                                        @RequestParam @Encrypt String name) {
+                                        @RequestParam @Encrypt(targetType = AccountEntity.class, targetName = "number") String name) {
         LOGGER.info("入参值为：{}", String.format("name: %s\n%s", name, accountEntity));
         return accountEntity;
     }

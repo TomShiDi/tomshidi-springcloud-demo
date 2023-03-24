@@ -1,11 +1,13 @@
 package com.tomshidi.base.encrypt.enums;
 
+import com.tomshidi.base.encrypt.config.EncryptConfig;
 import com.tomshidi.base.encrypt.util.SM4EncryptionUtil;
 import com.tomshidi.base.exceptions.BaseException;
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.util.ObjectUtils;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 /**
  * @author tomshidi
@@ -56,6 +58,16 @@ public enum EncryptEnum {
         this.desc = desc;
     }
 
+    public String encrypt(String plainText, EncryptConfig encryptConfig) {
+        Map<String, String> algorithmProperty = encryptConfig.getAlgorithmProperty(this.code);
+        return encrypt(plainText, algorithmProperty.get("key"), algorithmProperty.get("iv"));
+    }
+
+    public String decrypt(String cipherText, EncryptConfig encryptConfig) {
+        Map<String, String> algorithmProperty = encryptConfig.getAlgorithmProperty(this.code);
+        return decrypt(cipherText, algorithmProperty.get("key"), algorithmProperty.get("iv"));
+    }
+
     /**
      * 加密方法
      * @param plainText 明文串
@@ -63,7 +75,7 @@ public enum EncryptEnum {
      * @param iv
      * @return
      */
-    public abstract String encrypt(String plainText, String key, String iv);
+    abstract String encrypt(String plainText, String key, String iv);
 
-    public abstract String decrypt(String cipherText, String key, String iv);
+    abstract String decrypt(String cipherText, String key, String iv);
 }

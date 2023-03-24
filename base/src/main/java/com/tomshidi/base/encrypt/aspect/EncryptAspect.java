@@ -3,11 +3,13 @@ package com.tomshidi.base.encrypt.aspect;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tomshidi.base.encrypt.annotation.Encrypt;
+import com.tomshidi.base.encrypt.config.EncryptConfig;
 import com.tomshidi.base.exceptions.BaseException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -30,12 +32,12 @@ import java.util.Set;
 @Component
 public class EncryptAspect {
 
-    @Value("${do1.addressbook.encrypt.sm4.key:nGKoZHZZZJ0Q-NZZ}")
-    private String key;
+    private EncryptConfig encryptConfig;
 
-    @Value("${do1.addressbook.encrypt.sm4.iv:1W320KJR4GZ5XAVQ}")
-    private String iv;
-
+    @Autowired
+    public EncryptAspect(EncryptConfig encryptConfig) {
+        this.encryptConfig = encryptConfig;
+    }
 
     @Around("execution(public * com.tomshidi..controller.*.*(..))*")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -49,7 +51,16 @@ public class EncryptAspect {
         return returnValue;
     }
 
-    private Object decrypt(Method method, Object returnValue) throws IllegalAccessException, NoSuchFieldException {
+    /**
+     * 返回参数解密
+     *
+     * @param method      被拦截的方法
+     * @param returnValue 返回值
+     * @return 解密后的数据
+     * @throws NoSuchFieldException   找不到成员字段异常
+     * @throws IllegalAccessException 成员字段访问权限异常
+     */
+    public Object decrypt(Method method, Object returnValue) throws NoSuchFieldException, IllegalAccessException {
         if (method.isAnnotationPresent(Encrypt.class)) {
             Encrypt encrypt = method.getAnnotation(Encrypt.class);
             returnValue = enOrDecrypt(returnValue, encrypt, false);
@@ -91,7 +102,21 @@ public class EncryptAspect {
         if (argValueType.isPrimitive()) {
             throw new BaseException("不支持加密基础类型");
         } else if (String.class.isAssignableFrom(argValueType)) {
-            argValue = encrypt.encryptType().encrypt(argValue.toString(), key, iv);
+            String targetName = encrypt.targetName();
+            Class<?> targetType = encrypt.targetType();
+            // String参数需要指定实体类，否则无法判断是否需要加密
+            if (Void.class.isAssignableFrom(targetType)) {
+                throw new BaseException("加解密参数为String时必须指定targetType");
+            }
+            // String参数需要指定实体类里字段，否则无法判断是否需要加密
+            if (ObjectUtils.isEmpty(targetName)) {
+                throw new BaseException("加解密参数为String时必须指定targetName");
+            }
+            // 如果配置项里没有配置，则跳过加解密
+            if (!encryptConfig.needEncrypt(targetType, targetName)) {
+                return argValue;
+            }
+            argValue = encrypt.encryptType().encrypt(argValue.toString(), encryptConfig);
         } else if (Map.class.isAssignableFrom(argValueType)) {
             // 这种场景下，map的key要与实体类的字段名保持一致
             Class<?> targetType = encrypt.targetType();
@@ -125,7 +150,6 @@ public class EncryptAspect {
         return argValue;
     }
 
-
     /**
      * 对实体类对象加密或解密
      *
@@ -139,16 +163,17 @@ public class EncryptAspect {
         String enOrDecryptStr;
         for (Field field : declaredFields) {
             Encrypt encrypt = field.getAnnotation(Encrypt.class);
-            if (encrypt != null) {
+            if (encrypt != null
+                    && encryptConfig.needEncrypt(targetType, field.getName())) {
                 field.setAccessible(true);
                 Object value = field.get(o);
                 if (ObjectUtils.isEmpty(value)) {
                     continue;
                 }
                 if (isEncrypt) {
-                    enOrDecryptStr = encrypt.encryptType().encrypt(value.toString(), key, iv);
+                    enOrDecryptStr = encrypt.encryptType().encrypt(value.toString(), encryptConfig);
                 } else {
-                    enOrDecryptStr = encrypt.encryptType().decrypt(value.toString(), key, iv);
+                    enOrDecryptStr = encrypt.encryptType().decrypt(value.toString(), encryptConfig);
                 }
                 field.set(o, enOrDecryptStr);
                 field.setAccessible(false);
@@ -171,7 +196,8 @@ public class EncryptAspect {
         String enOrDecryptStr;
         for (Field field : declaredFields) {
             Encrypt encrypt = field.getAnnotation(Encrypt.class);
-            if (encrypt != null) {
+            if (encrypt != null
+                    && encryptConfig.needEncrypt(targetType, field.getName())) {
                 field.setAccessible(true);
                 Object value = field.get(o);
                 field.setAccessible(false);
@@ -179,9 +205,9 @@ public class EncryptAspect {
                     continue;
                 }
                 if (isEncrypt) {
-                    enOrDecryptStr = encrypt.encryptType().encrypt(value.toString(), key, iv);
+                    enOrDecryptStr = encrypt.encryptType().encrypt(value.toString(), encryptConfig);
                 } else {
-                    enOrDecryptStr = encrypt.encryptType().decrypt(value.toString(), key, iv);
+                    enOrDecryptStr = encrypt.encryptType().decrypt(value.toString(), encryptConfig);
                 }
                 String fieldName = field.getName();
                 map.put(fieldName, enOrDecryptStr);
@@ -201,13 +227,18 @@ public class EncryptAspect {
     private void entityFieldEncryptDecrypt(Collection<Object> collection, Class<?> targetType, String targetName, boolean isEncrypt) throws NoSuchFieldException {
         Field field = targetType.getDeclaredField(targetName);
         Encrypt encrypt = field.getAnnotation(Encrypt.class);
+        // 字段没加注解，或者配置项里没有配置，则跳过加解密
+        if (encrypt == null
+                || !encryptConfig.needEncrypt(targetType, field.getName())) {
+            return;
+        }
         String enOrDecryptStr;
         Collection<String> enOrDecryptCollection = collection instanceof List ? new ArrayList<>(collection.size()) : new HashSet<>(collection.size());
         for (Object item : collection) {
             if (isEncrypt) {
-                enOrDecryptStr = encrypt.encryptType().encrypt(item.toString(), key, iv);
+                enOrDecryptStr = encrypt.encryptType().encrypt(item.toString(), encryptConfig);
             } else {
-                enOrDecryptStr = encrypt.encryptType().decrypt(item.toString(), key, iv);
+                enOrDecryptStr = encrypt.encryptType().decrypt(item.toString(), encryptConfig);
             }
             enOrDecryptCollection.add(enOrDecryptStr);
         }

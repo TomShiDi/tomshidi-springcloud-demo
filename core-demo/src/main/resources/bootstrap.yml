@@ -27,3 +27,12 @@ logging:
     file: ${spring.application.name}.log
     host: 192.168.83.55
     port: 9250
+application:
+  encrypt:
+    affected-entity-fields:
+      com.tomshidi.demo.dto.AccountEntity:
+        - number
+    algorithm-and-property:
+      sm4:
+        key: nGKoZHZZZJ0Q-NZZ
+        iv: 1W320KJR4GZ5XAVQ
