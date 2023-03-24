@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,79 +40,103 @@ public class EncryptAspect {
     @Around("execution(public * com.tomshidi..controller.*.*(..))*")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        Parameter[] parameters = methodSignature.getMethod().getParameters();
+        Method method = methodSignature.getMethod();
+        Parameter[] parameters = method.getParameters();
         Object[] args = joinPoint.getArgs();
         encrypt(parameters, args);
         Object returnValue = joinPoint.proceed(args);
+        returnValue = decrypt(method, returnValue);
+        return returnValue;
+    }
+
+    private Object decrypt(Method method, Object returnValue) throws IllegalAccessException, NoSuchFieldException {
+        if (method.isAnnotationPresent(Encrypt.class)) {
+            Encrypt encrypt = method.getAnnotation(Encrypt.class);
+            returnValue = enOrDecrypt(returnValue, encrypt, false);
+        }
         return returnValue;
     }
 
     /**
-     * 对方法特定入参进行加密处理
+     * 入参加密
      *
-     * @param parameters  方法入参类型列表
-     * @param paramValues 方法入参值列表
-     * @throws IllegalAccessException 成员变量访问权限异常
-     * @throws NoSuchFieldException   找不到字段异常
+     * @param parameters  入参类型数据
+     * @param paramValues 入参值
+     * @throws IllegalAccessException 成员字段访问权限异常
+     * @throws NoSuchFieldException   找不到成员字段异常
      */
     public void encrypt(Parameter[] parameters, Object[] paramValues) throws IllegalAccessException, NoSuchFieldException {
-        Class<?>[] parameterTypes = new Class<?>[parameters.length];
         for (int i = 0; i < parameters.length; i++) {
-            parameterTypes[i] = parameters[i].getType();
-        }
-        for (int i = 0; i < parameterTypes.length; i++) {
-            Class<?> parameterType = parameterTypes[i];
             Parameter parameter = parameters[i];
             Object arg = paramValues[i];
             if (parameter.isAnnotationPresent(Encrypt.class)) {
                 Encrypt encrypt = parameter.getAnnotation(Encrypt.class);
-                if (parameterType.isPrimitive()) {
-                    throw new BaseException("不支持加密基础类型");
-                } else if (String.class.isAssignableFrom(parameterType)) {
-                    paramValues[i] = encrypt.encryptType().encrypt(arg.toString(), key, iv);
-                } else if (Map.class.isAssignableFrom(parameterType)) {
-                    // 这种场景下，map的key要与实体类的字段名保持一致
-                    Class<?> targetType = encrypt.targetType();
-                    if (Void.class.isAssignableFrom(targetType)) {
-                        throw new BaseException("加密参数为map时必须指定targetType");
-                    }
-                    entityFieldEncrypt((Map<String, Object>) arg, targetType);
-                } else if (List.class.isAssignableFrom(parameterType) || Set.class.isAssignableFrom(parameterType)) {
-                    String targetName = encrypt.targetName();
-                    Class<?> targetType = encrypt.targetType();
-                    // 集合参数需要指定实体类，否则无法判断是否需要加密
-                    if (Void.class.isAssignableFrom(targetType)) {
-                        throw new BaseException("加密参数为list/set时必须指定targetType");
-                    }
-                    // 集合参数需要指定实体类里字段，否则无法判断是否需要加密
-                    if (ObjectUtils.isEmpty(targetName)) {
-                        throw new BaseException("加密参数为list/set时必须指定targetName");
-                    }
-                    entityFieldEncrypt((Collection<Object>) arg, targetType, targetName);
-                } else {
-                    Class<?> targetType = encrypt.targetType();
-                    // 简化注解字段填写，当直接使用实体类作为入参时，可以不指定targetType
-                    if (Void.class.isAssignableFrom(targetType)) {
-                        targetType = parameterType;
-                    }
-                    if (!targetType.isAssignableFrom(parameterType)) {
-                        throw new BaseException("加密参数为自定义实体类时需要指定targetType");
-                    }
-                    entityFieldEncrypt(arg, targetType);
-                }
+                paramValues[i] = enOrDecrypt(arg, encrypt, true);
             }
         }
     }
 
     /**
-     * 对实体类对象加密
+     * 加密或解密
+     *
+     * @param argValue  原对象
+     * @param encrypt   加密算法注解信息
+     * @param isEncrypt true表示加密；false表示解密
+     * @return 加密或解密后的对象
+     * @throws IllegalAccessException 成员字段访问权限异常
+     * @throws NoSuchFieldException   找不到成员字段异常
+     */
+    private Object enOrDecrypt(Object argValue, Encrypt encrypt, boolean isEncrypt) throws IllegalAccessException, NoSuchFieldException {
+        Class<?> argValueType = argValue.getClass();
+        if (argValueType.isPrimitive()) {
+            throw new BaseException("不支持加密基础类型");
+        } else if (String.class.isAssignableFrom(argValueType)) {
+            argValue = encrypt.encryptType().encrypt(argValue.toString(), key, iv);
+        } else if (Map.class.isAssignableFrom(argValueType)) {
+            // 这种场景下，map的key要与实体类的字段名保持一致
+            Class<?> targetType = encrypt.targetType();
+            if (Void.class.isAssignableFrom(targetType)) {
+                throw new BaseException("加密参数为map时必须指定targetType");
+            }
+            entityFieldEncryptDecrypt((Map<String, Object>) argValue, targetType, isEncrypt);
+        } else if (List.class.isAssignableFrom(argValueType) || Set.class.isAssignableFrom(argValueType)) {
+            String targetName = encrypt.targetName();
+            Class<?> targetType = encrypt.targetType();
+            // 集合参数需要指定实体类，否则无法判断是否需要加密
+            if (Void.class.isAssignableFrom(targetType)) {
+                throw new BaseException("加解密参数为list/set时必须指定targetType");
+            }
+            // 集合参数需要指定实体类里字段，否则无法判断是否需要加密
+            if (ObjectUtils.isEmpty(targetName)) {
+                throw new BaseException("加解密参数为list/set时必须指定targetName");
+            }
+            entityFieldEncryptDecrypt((Collection<Object>) argValue, targetType, targetName, isEncrypt);
+        } else {
+            Class<?> targetType = encrypt.targetType();
+            // 简化注解字段填写，当直接使用实体类作为入参时，可以不指定targetType
+            if (Void.class.isAssignableFrom(targetType)) {
+                targetType = argValueType;
+            }
+            if (!targetType.isAssignableFrom(argValueType)) {
+                throw new BaseException("加解密参数为自定义实体类时需要指定targetType");
+            }
+            entityFieldEncryptDecrypt(argValue, targetType, isEncrypt);
+        }
+        return argValue;
+    }
+
+
+    /**
+     * 对实体类对象加密或解密
      *
      * @param o          实体类对象
      * @param targetType 实体类类型
+     * @param isEncrypt  true表示加密；false表示解密
      * @throws IllegalAccessException 成员变量访问权限异常
      */
-    private void entityFieldEncrypt(Object o, Class<?> targetType) throws IllegalAccessException {
+    private void entityFieldEncryptDecrypt(Object o, Class<?> targetType, boolean isEncrypt) throws IllegalAccessException {
         Field[] declaredFields = targetType.getDeclaredFields();
+        String enOrDecryptStr;
         for (Field field : declaredFields) {
             Encrypt encrypt = field.getAnnotation(Encrypt.class);
             if (encrypt != null) {
@@ -120,24 +145,30 @@ public class EncryptAspect {
                 if (ObjectUtils.isEmpty(value)) {
                     continue;
                 }
-                String encryptStr = encrypt.encryptType().encrypt(value.toString(), key, iv);
-                field.set(o, encryptStr);
+                if (isEncrypt) {
+                    enOrDecryptStr = encrypt.encryptType().encrypt(value.toString(), key, iv);
+                } else {
+                    enOrDecryptStr = encrypt.encryptType().decrypt(value.toString(), key, iv);
+                }
+                field.set(o, enOrDecryptStr);
                 field.setAccessible(false);
             }
         }
     }
 
     /**
-     * 对map类型参数加密
+     * 对map类型参数加密或解密
      *
      * @param map        待处理数据
      * @param targetType 对应的实体类类型
+     * @param isEncrypt  true表示加密；false表示解密
      * @throws IllegalAccessException 成员变量访问权限异常
      */
-    private void entityFieldEncrypt(Map<String, Object> map, Class<?> targetType) throws IllegalAccessException {
+    private void entityFieldEncryptDecrypt(Map<String, Object> map, Class<?> targetType, boolean isEncrypt) throws IllegalAccessException {
         Gson gson = new GsonBuilder().create();
         Object o = gson.fromJson(gson.toJson(map), targetType);
         Field[] declaredFields = targetType.getDeclaredFields();
+        String enOrDecryptStr;
         for (Field field : declaredFields) {
             Encrypt encrypt = field.getAnnotation(Encrypt.class);
             if (encrypt != null) {
@@ -147,33 +178,40 @@ public class EncryptAspect {
                 if (ObjectUtils.isEmpty(value)) {
                     continue;
                 }
-                String encryptStr = encrypt.encryptType().encrypt(value.toString(), key, iv);
+                if (isEncrypt) {
+                    enOrDecryptStr = encrypt.encryptType().encrypt(value.toString(), key, iv);
+                } else {
+                    enOrDecryptStr = encrypt.encryptType().decrypt(value.toString(), key, iv);
+                }
                 String fieldName = field.getName();
-                map.put(fieldName, encryptStr);
+                map.put(fieldName, enOrDecryptStr);
             }
         }
     }
 
     /**
-     * 对集合数据加密
+     * 对集合数据加密或解密
      *
      * @param collection 明文数据集合
      * @param targetType 对应的实体类类型
      * @param targetName 对应实体类中的字段
+     * @param isEncrypt  true表示加密；false表示解密
      * @throws NoSuchFieldException 找不到字段异常
      */
-    private void entityFieldEncrypt(Collection<Object> collection, Class<?> targetType, String targetName) throws NoSuchFieldException {
+    private void entityFieldEncryptDecrypt(Collection<Object> collection, Class<?> targetType, String targetName, boolean isEncrypt) throws NoSuchFieldException {
         Field field = targetType.getDeclaredField(targetName);
         Encrypt encrypt = field.getAnnotation(Encrypt.class);
-        String encryptStr;
-        Collection<String> encryptCollection = collection instanceof List ? new ArrayList<>(collection.size()) : new HashSet<>(collection.size());
+        String enOrDecryptStr;
+        Collection<String> enOrDecryptCollection = collection instanceof List ? new ArrayList<>(collection.size()) : new HashSet<>(collection.size());
         for (Object item : collection) {
-            encryptStr = encrypt.encryptType().encrypt(item.toString(), key, iv);
-            encryptCollection.add(encryptStr);
+            if (isEncrypt) {
+                enOrDecryptStr = encrypt.encryptType().encrypt(item.toString(), key, iv);
+            } else {
+                enOrDecryptStr = encrypt.encryptType().decrypt(item.toString(), key, iv);
+            }
+            enOrDecryptCollection.add(enOrDecryptStr);
         }
-        // 移除原明文数据
         collection.removeAll(collection);
-        // 填充密文数据
-        collection.addAll(encryptCollection);
+        collection.addAll(enOrDecryptCollection);
     }
 }

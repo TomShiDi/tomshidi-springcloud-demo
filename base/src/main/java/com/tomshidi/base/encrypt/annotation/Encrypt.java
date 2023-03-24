@@ -14,18 +14,20 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Target({ElementType.FIELD, ElementType.PARAMETER})
+@Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
 public @interface Encrypt {
 
     /**
      * 加密类型
-     * @see EncryptEnum
+     *
      * @return EncryptEnum
+     * @see EncryptEnum
      */
     EncryptEnum encryptType() default EncryptEnum.SM4;
 
     /**
      * 映射的字段名
+     *
      * @return String
      */
     String targetName() default "";
@@ -36,4 +38,11 @@ public @interface Encrypt {
      * @return Class
      */
     Class<?> targetType() default Void.class;
+
+    /**
+     * 加密或解密
+     *
+     * @return true表示加密；false表示解密
+     */
+    boolean enOrDecrypt() default true;
 }

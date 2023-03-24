@@ -180,4 +180,28 @@ public class IndexController {
                            @RequestParam String name) {
         return String.format("name: %s\n%s", name, accountList);
     }
+
+    @PostMapping("/decrypt1")
+    @Encrypt(enOrDecrypt = false)
+    public AccountEntity decrypt1(@RequestBody @Encrypt AccountEntity accountEntity,
+                                  @RequestParam @Encrypt String name) {
+        LOGGER.info("入参值为：{}", String.format("name: %s\n%s", name, accountEntity));
+        return accountEntity;
+    }
+
+    @PostMapping("/decrypt2")
+    @Encrypt(targetType = AccountEntity.class, enOrDecrypt = false)
+    public Map<String, Object> decrypt2(@RequestBody @Encrypt(targetType = AccountEntity.class) Map<String, Object> accountEntity,
+                                        @RequestParam @Encrypt String name) {
+        LOGGER.info("入参值为：{}", String.format("name: %s\n%s", name, accountEntity));
+        return accountEntity;
+    }
+
+    @PostMapping("/decrypt3")
+    @Encrypt(targetName = "number", targetType = AccountEntity.class, enOrDecrypt = false)
+    public Set<String> decrypt3(@RequestBody @Encrypt(targetName = "number", targetType = AccountEntity.class) Set<String> accountList,
+                                @RequestParam String name) {
+        LOGGER.info("入参值为：{}", String.format("name: %s\n%s", name, accountList));
+        return accountList;
+    }
 }
