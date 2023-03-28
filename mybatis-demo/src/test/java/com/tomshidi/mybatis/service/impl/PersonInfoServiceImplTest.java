@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,6 +62,13 @@ class PersonInfoServiceImplTest {
         personInfoEntity.setSex("女");
         List<PersonInfoEntity> personInfoEntityList = personInfoService.queryPersonByCondition(personInfoEntity);
         assertNotEquals(0, personInfoEntityList.size());
+    }
+
+    @Test
+    void queryPersonByName() {
+        List<String> nameList = Stream.of("Tohka", "tomshidi").collect(Collectors.toList());
+        List<PersonInfoEntity> personInfoEntities = personInfoService.queryPersonByName(nameList);
+        assertNotEquals(0, personInfoEntities.size());
     }
 
     @Test

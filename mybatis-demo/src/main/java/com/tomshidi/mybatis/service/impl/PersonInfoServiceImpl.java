@@ -66,6 +66,13 @@ public class PersonInfoServiceImpl extends ServiceImpl<PersonInfoPlusMapper, Per
     }
 
     @Override
+    public List<PersonInfoEntity> queryPersonByName(List<String> nameList) {
+        LambdaQueryWrapper<PersonInfoEntity> lambdaQueryWrapper = new EncryptLambdaQueryWrapper<>();
+        lambdaQueryWrapper.in(!ObjectUtils.isEmpty(nameList), PersonInfoEntity::getName, nameList);
+        return personInfoPlusMapper.selectList(lambdaQueryWrapper);
+    }
+
+    @Override
     public List<PersonInfoEntity> queryByCondition(PersonInfoEntity personInfoEntity) {
         QueryWrapper<PersonInfoEntity> queryWrapper = new EncryptQueryWrapper<>();
         queryWrapper.setEntityClass(PersonInfoEntity.class)

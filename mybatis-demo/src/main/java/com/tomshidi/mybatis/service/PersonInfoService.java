@@ -21,5 +21,7 @@ public interface PersonInfoService {
 
     List<PersonInfoEntity> queryPersonByCondition(PersonInfoEntity personInfoEntity);
 
+    List<PersonInfoEntity> queryPersonByName(List<String> nameList);
+
     List<PersonInfoEntity> queryByCondition(PersonInfoEntity personInfoEntity);
 }
