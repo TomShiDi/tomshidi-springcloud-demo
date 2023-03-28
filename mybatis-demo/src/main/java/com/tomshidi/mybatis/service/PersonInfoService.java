@@ -1,7 +1,7 @@
 package com.tomshidi.mybatis.service;
 
 
-import com.tomshidi.model.PersonInfoEntity;
+import com.tomshidi.mybatis.model.PersonInfoEntity;
 
 import java.util.List;
 

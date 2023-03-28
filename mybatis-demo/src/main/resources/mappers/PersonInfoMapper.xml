@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tomshidi.mybatis.mapper.PersonInfoMapper">
-    <insert id="addPersonInfo" parameterType="com.tomshidi.model.PersonInfoEntity">
+    <insert id="addPersonInfo" parameterType="com.tomshidi.mybatis.model.PersonInfoEntity">
         insert into `person_info` (`id`, `name`, `sex`, `desc`, `hire_date`)
         values (#{personInfo.id}, #{personInfo.name}, #{personInfo.sex}, #{personInfo.desc}, #{personInfo.hireDate});
     </insert>
@@ -10,11 +10,11 @@
         delete from `person_info` where `id` = #{id};
     </delete>
 
-    <select id="queryPersonById" parameterType="String" resultType="com.tomshidi.model.PersonInfoEntity">
+    <select id="queryPersonById" parameterType="String" resultType="com.tomshidi.mybatis.model.PersonInfoEntity">
         select `id`,`name`,`sex`,`desc`,`hire_date` from person_info t where t.id = #{id};
     </select>
 
-    <select id="queryPersonByCondition" parameterType="com.tomshidi.model.PersonInfoEntity" resultType="com.tomshidi.model.PersonInfoEntity">
+    <select id="queryPersonByCondition" parameterType="com.tomshidi.mybatis.model.PersonInfoEntity" resultType="com.tomshidi.mybatis.model.PersonInfoEntity">
         select * from person_info t
         <where>
             <if test="personInfo.name != null">

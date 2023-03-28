@@ -1,7 +1,7 @@
 package com.tomshidi.mybatis.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.tomshidi.model.TreePathTable;
+import com.tomshidi.mybatis.model.TreePathTable;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -1,6 +1,6 @@
 package com.tomshidi.mybatis.mapper;
 
-import com.tomshidi.model.TreePathTable;
+import com.tomshidi.mybatis.model.TreePathTable;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

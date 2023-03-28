@@ -1,7 +1,7 @@
 package com.tomshidi.mybatis.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.tomshidi.model.TreePathTable;
+import com.tomshidi.mybatis.model.TreePathTable;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

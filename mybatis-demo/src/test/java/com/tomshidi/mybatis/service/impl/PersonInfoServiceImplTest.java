@@ -1,6 +1,6 @@
 package com.tomshidi.mybatis.service.impl;
 
-import com.tomshidi.model.PersonInfoEntity;
+import com.tomshidi.mybatis.model.PersonInfoEntity;
 import com.tomshidi.mybatis.service.PersonInfoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

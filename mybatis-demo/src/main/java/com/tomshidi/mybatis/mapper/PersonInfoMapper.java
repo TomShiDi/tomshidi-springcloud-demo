@@ -1,7 +1,7 @@
 package com.tomshidi.mybatis.mapper;
 
 import com.tomshidi.base.encrypt.annotation.Encrypt;
-import com.tomshidi.model.PersonInfoEntity;
+import com.tomshidi.mybatis.model.PersonInfoEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

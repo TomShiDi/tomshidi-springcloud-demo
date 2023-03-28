@@ -1,7 +1,7 @@
 package com.tomshidi.mybatis.service.impl;
 
 
-import com.tomshidi.model.TreePathTable;
+import com.tomshidi.mybatis.model.TreePathTable;
 import com.tomshidi.mybatis.mapper.TreePathTableMapper;
 import com.tomshidi.mybatis.service.TreePathTableService;
 import org.springframework.beans.factory.annotation.Autowired;

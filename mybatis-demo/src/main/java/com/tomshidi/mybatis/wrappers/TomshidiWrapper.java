@@ -1,4 +1,4 @@
-package com.tomshidi.base.wrappers;
+package com.tomshidi.mybatis.wrappers;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.enums.SqlKeyword;
@@ -7,8 +7,6 @@ import com.baomidou.mybatisplus.core.toolkit.support.LambdaMeta;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.tomshidi.base.encrypt.annotation.Encrypt;
 import com.tomshidi.base.encrypt.helper.SecurityHelper;
-import com.tomshidi.base.enums.BaseExceptionEnum;
-import com.tomshidi.base.exceptions.BaseException;
 import org.apache.ibatis.reflection.property.PropertyNamer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

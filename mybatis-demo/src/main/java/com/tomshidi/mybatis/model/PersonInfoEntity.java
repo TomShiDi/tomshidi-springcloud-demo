@@ -1,4 +1,4 @@
-package com.tomshidi.model;
+package com.tomshidi.mybatis.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;

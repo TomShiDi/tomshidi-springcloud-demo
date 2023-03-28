@@ -1,6 +1,6 @@
 package com.tomshidi.mybatis.mapper;
 
-import com.tomshidi.model.PersonInfoEntity;
+import com.tomshidi.mybatis.model.PersonInfoEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
