@@ -1,7 +1,7 @@
 package com.tomshidi.base.enums;
 
 /**
- * @author tangshili
+ * @author tomshidi
  * @since 2023/2/24 11:10
  */
 public enum TestEnum {

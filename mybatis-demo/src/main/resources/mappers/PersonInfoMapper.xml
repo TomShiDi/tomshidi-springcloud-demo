@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomshidi.mybatis.mapper.PersonInfoMapper">
+    <insert id="addPersonInfo" parameterType="com.tomshidi.model.PersonInfoEntity">
+        insert into `person_info` (`id`, `name`, `sex`, `desc`, `hire_date`)
+        values (#{personInfo.id}, #{personInfo.name}, #{personInfo.sex}, #{personInfo.desc}, #{personInfo.hireDate});
+    </insert>
+
+    <delete id="deletePersonById" parameterType="String">
+        delete from `person_info` where `id` = #{id};
+    </delete>
+
+    <select id="queryPersonById" parameterType="String" resultType="com.tomshidi.model.PersonInfoEntity">
+        select `id`,`name`,`sex`,`desc`,`hire_date` from person_info t where t.id = #{id};
+    </select>
+
+    <select id="queryPersonByCondition" parameterType="com.tomshidi.model.PersonInfoEntity" resultType="com.tomshidi.model.PersonInfoEntity">
+        select * from person_info t
+        <where>
+            <if test="personInfo.name != null">
+                t.name = #{personInfo.name}
+            </if>
+            <if test="personInfo.sex != null">
+                and t.sex = #{personInfo.sex}
+            </if>
+            <if test="personInfo.desc != null">
+                and desc like concat('%',#{personInfo.name},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

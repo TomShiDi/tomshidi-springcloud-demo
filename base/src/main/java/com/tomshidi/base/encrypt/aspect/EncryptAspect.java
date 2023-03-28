@@ -8,7 +8,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 
 /**
  * @author tomshidi
@@ -18,13 +17,12 @@ import java.lang.reflect.Parameter;
 @Component
 public class EncryptAspect {
 
-    @Around("execution(public * com.tomshidi..controller.*.*(..))*")
+    @Around("execution(public * com.tomshidi..mapper.*.*(..))*")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
-        Parameter[] parameters = method.getParameters();
         Object[] args = joinPoint.getArgs();
-        SecurityHelper.encrypt(parameters, args);
+        SecurityHelper.encrypt(method, args);
         Object returnValue = joinPoint.proceed(args);
         returnValue = SecurityHelper.decrypt(method, returnValue);
         return returnValue;

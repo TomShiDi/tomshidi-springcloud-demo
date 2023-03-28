@@ -20,13 +20,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author tangshili
+ * @author tomshidi
  * @since 2023/3/24 16:51
  */
 @Component
 public class SecurityHelper {
 
-    private static EncryptConfig encryptConfig;
+    public static EncryptConfig encryptConfig;
 
     @Autowired
     public void setEncryptConfig(EncryptConfig encryptConfig) {
@@ -53,12 +53,13 @@ public class SecurityHelper {
     /**
      * 入参加密
      *
-     * @param parameters  入参类型数据
+     * @param method 被代理的方法
      * @param paramValues 入参值
      * @throws IllegalAccessException 成员字段访问权限异常
      * @throws NoSuchFieldException   找不到成员字段异常
      */
-    public static void encrypt(Parameter[] parameters, Object[] paramValues) throws IllegalAccessException, NoSuchFieldException {
+    public static void encrypt(Method method, Object[] paramValues) throws IllegalAccessException, NoSuchFieldException {
+        Parameter[] parameters = method.getParameters();
         for (int i = 0; i < parameters.length; i++) {
             Parameter parameter = parameters[i];
             Object arg = paramValues[i];
@@ -80,6 +81,9 @@ public class SecurityHelper {
      * @throws NoSuchFieldException   找不到成员字段异常
      */
     private static Object enOrDecrypt(Object argValue, Encrypt encrypt, boolean isEncrypt) throws IllegalAccessException, NoSuchFieldException {
+        if (ObjectUtils.isEmpty(argValue)) {
+            return argValue;
+        }
         Class<?> argValueType = argValue.getClass();
         if (argValueType.isPrimitive()) {
             throw new BaseException("不支持加密基础类型");
@@ -117,7 +121,7 @@ public class SecurityHelper {
             if (ObjectUtils.isEmpty(targetName)) {
                 throw new BaseException("加解密参数为list/set时必须指定targetName");
             }
-            entityFieldEncryptDecrypt((Collection<Object>) argValue, targetType, targetName, isEncrypt);
+            entityFieldEncryptDecrypt((Collection<Object>) argValue, targetName, isEncrypt);
         } else {
             Class<?> targetType = encrypt.targetType();
             // 简化注解字段填写，当直接使用实体类作为入参时，可以不指定targetType
@@ -127,7 +131,7 @@ public class SecurityHelper {
             if (!targetType.isAssignableFrom(argValueType)) {
                 throw new BaseException("加解密参数为自定义实体类时需要指定targetType");
             }
-            entityFieldEncryptDecrypt(argValue, targetType, isEncrypt);
+            entityFieldEncryptDecrypt(argValue, isEncrypt);
         }
         return argValue;
     }
@@ -136,11 +140,15 @@ public class SecurityHelper {
      * 对实体类对象加密或解密
      *
      * @param o          实体类对象
-     * @param targetType 实体类类型
      * @param isEncrypt  true表示加密；false表示解密
      * @throws IllegalAccessException 成员变量访问权限异常
      */
-    private static void entityFieldEncryptDecrypt(Object o, Class<?> targetType, boolean isEncrypt) throws IllegalAccessException {
+    public static void entityFieldEncryptDecrypt(Object o, boolean isEncrypt) throws IllegalAccessException {
+        Class<?> targetType = o.getClass();
+        // 先对实体类进行整体判断
+        if (!encryptConfig.needEncrypt(targetType)) {
+            return;
+        }
         Field[] declaredFields = targetType.getDeclaredFields();
         String enOrDecryptStr;
         for (Field field : declaredFields) {
@@ -201,30 +209,49 @@ public class SecurityHelper {
      * 对集合数据加密或解密
      *
      * @param collection 明文数据集合
-     * @param targetType 对应的实体类类型
      * @param targetName 对应实体类中的字段
      * @param isEncrypt  true表示加密；false表示解密
      * @throws NoSuchFieldException 找不到字段异常
      */
-    private static void entityFieldEncryptDecrypt(Collection<Object> collection, Class<?> targetType, String targetName, boolean isEncrypt) throws NoSuchFieldException {
-        Field field = targetType.getDeclaredField(targetName);
-        Encrypt encrypt = field.getAnnotation(Encrypt.class);
-        // 字段没加注解，或者配置项里没有配置，则跳过加解密
-        if (encrypt == null
-                || !encryptConfig.needEncrypt(targetType, field.getName())) {
+    public static void entityFieldEncryptDecrypt(Collection<Object> collection, String targetName, boolean isEncrypt) throws NoSuchFieldException, IllegalAccessException {
+        if (ObjectUtils.isEmpty(collection)) {
             return;
         }
+        Class<?> targetType = collection
+                .iterator()
+                .next()
+                .getClass();
+        Collection<Object> enOrDecryptCollection = collection instanceof List ? new ArrayList<>(collection.size()) : new HashSet<>(collection.size());
         String enOrDecryptStr;
-        Collection<String> enOrDecryptCollection = collection instanceof List ? new ArrayList<>(collection.size()) : new HashSet<>(collection.size());
-        for (Object item : collection) {
-            if (isEncrypt) {
-                enOrDecryptStr = encrypt.encryptType().encrypt(item.toString(), encryptConfig);
-            } else {
-                enOrDecryptStr = encrypt.encryptType().decrypt(item.toString(), encryptConfig);
+        // 如果加密配置项里有该类型
+        if (encryptConfig.needEncrypt(targetType)) {
+            for (Object item : collection) {
+                entityFieldEncryptDecrypt(item, isEncrypt);
             }
-            enOrDecryptCollection.add(enOrDecryptStr);
+        } else if (targetType.isAssignableFrom(String.class)) {
+            Field field = targetType.getDeclaredField(targetName);
+            Encrypt encrypt = field.getAnnotation(Encrypt.class);
+            if (encrypt == null) {
+                return;
+            }
+            for (Object item : collection) {
+                if (isEncrypt) {
+                    enOrDecryptStr = encrypt.encryptType().encrypt(item.toString(), encryptConfig);
+                } else {
+                    enOrDecryptStr = encrypt.encryptType().decrypt(item.toString(), encryptConfig);
+                }
+                enOrDecryptCollection.add(enOrDecryptStr);
+            }
+            collection.removeAll(collection);
+            collection.addAll(enOrDecryptCollection);
         }
-        collection.removeAll(collection);
-        collection.addAll(enOrDecryptCollection);
+    }
+
+    public static boolean needEncrypt(Class<?> targetType, String fieldName) {
+        return encryptConfig.needEncrypt(targetType, fieldName);
+    }
+
+    public static boolean needEncrypt(Class<?> targetType) {
+        return encryptConfig.needEncrypt(targetType);
     }
 }

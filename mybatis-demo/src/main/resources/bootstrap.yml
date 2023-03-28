@@ -26,8 +26,24 @@ logging:
     host: 192.168.83.55
     port: 9250
 
-mybatis:
+#mybatis:
+#  mapper-locations:
+#    - classpath:mappers/**/*.xml
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+mybatis-plus:
   mapper-locations:
     - classpath:mappers/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+application:
+  encrypt:
+    algorithm-and-property:
+      sm4:
+        key: nGKoZHZZZJ0Q-NZZ
+        iv: 1W320KJR4GZ5XAVQ
+    affected-entity-fields:
+      com.tomshidi.model.PersonInfoEntity:
+        - name

@@ -43,6 +43,14 @@ public class EncryptConfig {
         return algorithmAndProperty.get(algorithmName);
     }
 
+    public boolean needEncrypt(Class<?> type) {
+        if (ObjectUtils.isEmpty(affectedEntityFields)) {
+            return false;
+        }
+        List<String> fieldList = affectedEntityFields.get(type.getTypeName());
+        return !ObjectUtils.isEmpty(fieldList);
+    }
+
     public boolean needEncrypt(Class<?> type, String fieldName) {
         if (ObjectUtils.isEmpty(affectedEntityFields)) {
             return false;

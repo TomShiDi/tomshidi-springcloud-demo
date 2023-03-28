@@ -1,14 +1,14 @@
 package com.tomshidi.mybatis.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.tomshidi.model.TreePathTable;
+import com.tomshidi.model.PersonInfoEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author tomshidi
- * @date 2023/2/22 15:50
+ * @since 2023/3/24 17:54
  */
 @Mapper
-public interface TreePathTablePlusMapper extends BaseMapper<TreePathTable> {
+public interface PersonInfoPlusMapper extends BaseMapper<PersonInfoEntity> {
 
 }

@@ -11,6 +11,7 @@ public enum BaseExceptionEnum {
     COMMON_EXCEPTION(-1, "通用异常"),
     RECORD_DATA_NOT_FOUND(1001, "数据不存在"),
     PARENT_NODE_NOT_FOUND(1002, "父节点数据不存在"),
+    FIELD_NOT_FOUND(1003, "反射待获取字段不存在"),
     ;
 
     private Integer code;
