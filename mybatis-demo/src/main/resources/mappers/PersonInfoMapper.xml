@@ -24,7 +24,7 @@
                 and t.sex = #{personInfo.sex}
             </if>
             <if test="personInfo.desc != null">
-                and desc like concat('%',#{personInfo.name},'%')
+                and t.desc like concat('%',#{personInfo.desc},'%')
             </if>
         </where>
     </select>
