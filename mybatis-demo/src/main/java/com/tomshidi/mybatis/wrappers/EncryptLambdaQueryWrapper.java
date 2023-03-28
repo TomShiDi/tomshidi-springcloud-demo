@@ -19,9 +19,9 @@ import java.lang.reflect.Field;
  * @author tomshidi
  * @since 2023/3/27 11:34
  */
-public class TomshidiWrapper<T> extends LambdaQueryWrapper<T> {
+public class EncryptLambdaQueryWrapper<T> extends LambdaQueryWrapper<T> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TomshidiWrapper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EncryptLambdaQueryWrapper.class);
 
     @Override
     protected LambdaQueryWrapper<T> addCondition(boolean condition, SFunction<T, ?> column, SqlKeyword sqlKeyword, Object val) {

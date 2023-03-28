@@ -61,4 +61,13 @@ class PersonInfoServiceImplTest {
         List<PersonInfoEntity> personInfoEntityList = personInfoService.queryPersonByCondition(personInfoEntity);
         assertNotEquals(0, personInfoEntityList.size());
     }
+
+    @Test
+    void queryByCondition() {
+        PersonInfoEntity personInfoEntity = new PersonInfoEntity();
+        personInfoEntity.setName("Tohka");
+        personInfoEntity.setSex("女");
+        List<PersonInfoEntity> personInfoEntityList = personInfoService.queryByCondition(personInfoEntity);
+        assertNotEquals(0, personInfoEntityList.size());
+    }
 }

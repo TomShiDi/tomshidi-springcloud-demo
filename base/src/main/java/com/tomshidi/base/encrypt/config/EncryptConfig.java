@@ -44,6 +44,9 @@ public class EncryptConfig {
     }
 
     public boolean needEncrypt(Class<?> type) {
+        if (type == null) {
+            return false;
+        }
         if (ObjectUtils.isEmpty(affectedEntityFields)) {
             return false;
         }

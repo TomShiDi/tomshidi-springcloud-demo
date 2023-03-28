@@ -40,8 +40,9 @@ class PersonInfoMapperTest{
     @Test
     void queryPersonByCondition() {
         PersonInfoEntity personInfoEntity = new PersonInfoEntity();
-        personInfoEntity.setName("tomshidi");
-        personInfoEntity.setSex("男");
+        personInfoEntity.setName("Tohka");
+        personInfoEntity.setSex("女");
+        personInfoEntity.setDesc("你好");
         List<PersonInfoEntity> personInfoEntityList = personInfoMapper.queryPersonByCondition(personInfoEntity);
         assertNotEquals(0, personInfoEntityList.size());
     }

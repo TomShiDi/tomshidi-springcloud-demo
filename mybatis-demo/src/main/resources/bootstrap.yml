@@ -45,5 +45,5 @@ application:
         key: nGKoZHZZZJ0Q-NZZ
         iv: 1W320KJR4GZ5XAVQ
     affected-entity-fields:
-      com.tomshidi.model.PersonInfoEntity:
+      com.tomshidi.mybatis.model.PersonInfoEntity:
         - name

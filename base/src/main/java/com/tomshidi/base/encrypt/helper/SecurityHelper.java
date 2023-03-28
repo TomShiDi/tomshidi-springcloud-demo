@@ -117,11 +117,7 @@ public class SecurityHelper {
             if (Void.class.isAssignableFrom(targetType)) {
                 throw new BaseException("加解密参数为list/set时必须指定targetType");
             }
-            // 集合参数需要指定实体类里字段，否则无法判断是否需要加密
-            if (ObjectUtils.isEmpty(targetName)) {
-                throw new BaseException("加解密参数为list/set时必须指定targetName");
-            }
-            entityFieldEncryptDecrypt((Collection<Object>) argValue, targetName, isEncrypt);
+            entityFieldEncryptDecrypt((Collection<Object>) argValue, targetType, targetName, isEncrypt);
         } else {
             Class<?> targetType = encrypt.targetType();
             // 简化注解字段填写，当直接使用实体类作为入参时，可以不指定targetType
@@ -213,22 +209,22 @@ public class SecurityHelper {
      * @param isEncrypt  true表示加密；false表示解密
      * @throws NoSuchFieldException 找不到字段异常
      */
-    public static void entityFieldEncryptDecrypt(Collection<Object> collection, String targetName, boolean isEncrypt) throws NoSuchFieldException, IllegalAccessException {
+    public static void entityFieldEncryptDecrypt(Collection<Object> collection, Class<?> targetType, String targetName, boolean isEncrypt) throws NoSuchFieldException, IllegalAccessException {
         if (ObjectUtils.isEmpty(collection)) {
             return;
         }
-        Class<?> targetType = collection
+        Class<?> actualType = collection
                 .iterator()
                 .next()
                 .getClass();
         Collection<Object> enOrDecryptCollection = collection instanceof List ? new ArrayList<>(collection.size()) : new HashSet<>(collection.size());
         String enOrDecryptStr;
         // 如果加密配置项里有该类型
-        if (encryptConfig.needEncrypt(targetType)) {
+        if (encryptConfig.needEncrypt(actualType)) {
             for (Object item : collection) {
                 entityFieldEncryptDecrypt(item, isEncrypt);
             }
-        } else if (targetType.isAssignableFrom(String.class)) {
+        } else if (actualType.isAssignableFrom(String.class) && encryptConfig.needEncrypt(targetType)) {
             Field field = targetType.getDeclaredField(targetName);
             Encrypt encrypt = field.getAnnotation(Encrypt.class);
             if (encrypt == null) {

@@ -1,13 +1,15 @@
 package com.tomshidi.mybatis.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tomshidi.base.encrypt.annotation.Encrypt;
 import com.tomshidi.mybatis.model.PersonInfoEntity;
 import com.tomshidi.mybatis.mapper.PersonInfoMapper;
 import com.tomshidi.mybatis.mapper.PersonInfoPlusMapper;
 import com.tomshidi.mybatis.service.PersonInfoService;
-import com.tomshidi.mybatis.wrappers.TomshidiWrapper;
+import com.tomshidi.mybatis.wrappers.EncryptLambdaQueryWrapper;
+import com.tomshidi.mybatis.wrappers.EncryptQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,10 +58,20 @@ public class PersonInfoServiceImpl extends ServiceImpl<PersonInfoPlusMapper, Per
     @Override
     @Encrypt
     public List<PersonInfoEntity> queryPersonByCondition(PersonInfoEntity personInfoEntity) {
-        LambdaQueryWrapper<PersonInfoEntity> queryWrapper = new TomshidiWrapper<>();
+        LambdaQueryWrapper<PersonInfoEntity> queryWrapper = new EncryptLambdaQueryWrapper<>();
         queryWrapper.eq(!ObjectUtils.isEmpty(personInfoEntity.getName()), PersonInfoEntity::getName, personInfoEntity.getName())
                 .eq(!ObjectUtils.isEmpty(personInfoEntity.getSex()), PersonInfoEntity::getSex, personInfoEntity.getSex())
                 .like(!ObjectUtils.isEmpty(personInfoEntity.getDesc()), PersonInfoEntity::getDesc, personInfoEntity.getDesc());
+        return personInfoPlusMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<PersonInfoEntity> queryByCondition(PersonInfoEntity personInfoEntity) {
+        QueryWrapper<PersonInfoEntity> queryWrapper = new EncryptQueryWrapper<>();
+        queryWrapper.setEntityClass(PersonInfoEntity.class)
+                .eq(!ObjectUtils.isEmpty(personInfoEntity.getName()), "name", personInfoEntity.getName())
+                .eq(!ObjectUtils.isEmpty(personInfoEntity.getSex()), "sex", personInfoEntity.getSex())
+                .like(!ObjectUtils.isEmpty(personInfoEntity.getDesc()), "desc", personInfoEntity.getDesc());
         return personInfoPlusMapper.selectList(queryWrapper);
     }
 }

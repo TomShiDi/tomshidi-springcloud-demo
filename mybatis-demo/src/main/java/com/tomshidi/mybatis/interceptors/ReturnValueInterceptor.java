@@ -46,7 +46,7 @@ public class ReturnValueInterceptor implements Interceptor {
             if (!ObjectUtils.isEmpty(collection)) {
                 Object item = collection.iterator().next();
                 if (SecurityHelper.needEncrypt(item.getClass())) {
-                    SecurityHelper.entityFieldEncryptDecrypt(collection, "", false);
+                    SecurityHelper.entityFieldEncryptDecrypt(collection, item.getClass(), "", false);
                 }
             }
         } else {
