@@ -3,6 +3,7 @@ package com.tomshidi.demo.controller;
 import com.tomshidi.base.encrypt.annotation.Encrypt;
 import com.tomshidi.base.enums.TestEnum;
 import com.tomshidi.demo.dto.AccountEntity;
+import com.tomshidi.demo.dto.SystemVersionInfo;
 import com.tomshidi.demo.interceptor.ServerMapInterceptor;
 import com.tomshidi.demo.threadpool.DefaultThreadPool;
 import com.tomshidi.demo.threads.DemoThread;
@@ -44,7 +45,7 @@ import java.util.regex.Pattern;
  */
 @RestController
 @RequestMapping("/index")
-public class IndexController {
+public class IndexController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
@@ -203,5 +204,15 @@ public class IndexController {
                                 @RequestParam String name) {
         LOGGER.info("入参值为：{}", String.format("name: %s\n%s", name, accountList));
         return accountList;
+    }
+
+    @GetMapping("/getSystemVersion")
+    @Override
+    public SystemVersionInfo getSystemVersion() {
+        return new SystemVersionInfo()
+                .versionId("v1.0")
+                .author("tomshidi")
+                .email("11111@gmail.com")
+                .desc("初版");
     }
 }
