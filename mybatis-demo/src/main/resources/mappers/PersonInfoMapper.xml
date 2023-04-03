@@ -14,7 +14,22 @@
         select `id`,`name`,`sex`,`desc`,`hire_date` from person_info t where t.id = #{id};
     </select>
 
-    <select id="queryPersonByCondition" parameterType="com.tomshidi.mybatis.model.PersonInfoEntity" resultType="com.tomshidi.mybatis.model.PersonInfoEntity">
+    <select id="queryPersonListByCondition" parameterType="com.tomshidi.mybatis.model.PersonInfoEntity" resultType="com.tomshidi.mybatis.model.PersonInfoEntity">
+        select * from person_info t
+        <where>
+            <if test="personInfo.name != null">
+                t.name = #{personInfo.name}
+            </if>
+            <if test="personInfo.sex != null">
+                and t.sex = #{personInfo.sex}
+            </if>
+            <if test="personInfo.desc != null">
+                and t.desc like concat('%',#{personInfo.desc},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="queryPersonPageByCondition" parameterType="com.tomshidi.mybatis.model.PersonInfoEntity" resultType="com.tomshidi.mybatis.model.PersonInfoEntity">
         select * from person_info t
         <where>
             <if test="personInfo.name != null">

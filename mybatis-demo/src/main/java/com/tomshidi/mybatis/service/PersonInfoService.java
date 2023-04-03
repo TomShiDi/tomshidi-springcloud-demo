@@ -15,6 +15,8 @@ public interface PersonInfoService {
 
     void savePersonInfo(PersonInfoEntity personInfoEntity);
 
+    void savePersonInfos(List<PersonInfoEntity> personInfoEntityList);
+
     void deletePersonById(String id);
 
     PersonInfoEntity queryPersonById(String id);

@@ -1,5 +1,6 @@
 package com.tomshidi.mybatis.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tomshidi.mybatis.model.PersonInfoEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,18 @@ class PersonInfoMapperTest{
         personInfoEntity.setName("Tohka");
         personInfoEntity.setSex("女");
         personInfoEntity.setDesc("你好");
-        List<PersonInfoEntity> personInfoEntityList = personInfoMapper.queryPersonByCondition(personInfoEntity);
+        List<PersonInfoEntity> personInfoEntityList = personInfoMapper.queryPersonListByCondition(personInfoEntity);
         assertNotEquals(0, personInfoEntityList.size());
+    }
+
+    @Test
+    void queryPersonPageByCondition() {
+        PersonInfoEntity personInfoEntity = new PersonInfoEntity();
+        personInfoEntity.setName("Tohka");
+        personInfoEntity.setSex("女");
+        personInfoEntity.setDesc("你好");
+        Page<PersonInfoEntity> page = Page.of(0, 10);
+        Page<PersonInfoEntity> personInfoEntityPage = personInfoMapper.queryPersonPageByCondition(page, personInfoEntity);
+        assertNotEquals(0, personInfoEntityPage.getTotal());
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -42,6 +43,24 @@ class PersonInfoServiceImplTest {
         personInfoEntity.setSex("女");
         personInfoEntity.setHireDate(LocalDateTime.now());
         personInfoService.savePersonInfo(personInfoEntity);
+    }
+
+    @Test
+    void savePersonInfos() {
+        List<PersonInfoEntity> personInfoEntityList = new ArrayList<>();
+        PersonInfoEntity personInfoEntity1 = new PersonInfoEntity();
+        personInfoEntity1.setId(UUID.randomUUID().toString());
+        personInfoEntity1.setName("Yoxino1");
+        personInfoEntity1.setSex("女");
+        personInfoEntity1.setHireDate(LocalDateTime.now());
+        personInfoEntityList.add(personInfoEntity1);
+        PersonInfoEntity personInfoEntity2 = new PersonInfoEntity();
+        personInfoEntity2.setId(UUID.randomUUID().toString());
+        personInfoEntity2.setName("Yoxino2");
+        personInfoEntity2.setSex("女");
+        personInfoEntity2.setHireDate(LocalDateTime.now());
+        personInfoEntityList.add(personInfoEntity2);
+        personInfoService.savePersonInfos(personInfoEntityList);
     }
 
     @Test

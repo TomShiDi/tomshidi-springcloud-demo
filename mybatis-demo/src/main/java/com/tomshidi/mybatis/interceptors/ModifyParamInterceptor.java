@@ -11,7 +11,7 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
+import java.sql.Statement;
 
 /**
  * 拦截mybatis的sql语句构造器
@@ -20,7 +20,7 @@ import java.sql.Connection;
  */
 @Component
 @Intercepts({
-        @Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})
+        @Signature(type = StatementHandler.class, method = "parameterize", args = {Statement.class})
 })
 public class ModifyParamInterceptor implements Interceptor {
     @Override

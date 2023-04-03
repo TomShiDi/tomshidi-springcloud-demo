@@ -46,6 +46,11 @@ public class PersonInfoServiceImpl extends ServiceImpl<PersonInfoPlusMapper, Per
     }
 
     @Override
+    public void savePersonInfos(List<PersonInfoEntity> personInfoEntityList) {
+        saveBatch(personInfoEntityList);
+    }
+
+    @Override
     public void deletePersonById(String id) {
         personInfoPlusMapper.deleteById(id);
     }

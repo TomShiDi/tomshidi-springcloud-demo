@@ -1,5 +1,6 @@
 package com.tomshidi.mybatis.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tomshidi.base.encrypt.annotation.Encrypt;
 import com.tomshidi.mybatis.model.PersonInfoEntity;
 import org.apache.ibatis.annotations.Mapper;
@@ -19,5 +20,7 @@ public interface PersonInfoMapper {
 
     PersonInfoEntity queryPersonById(@Param("id") String id);
 
-    List<PersonInfoEntity> queryPersonByCondition(@Param("personInfo") @Encrypt PersonInfoEntity personInfoEntity);
+    List<PersonInfoEntity> queryPersonListByCondition(@Param("personInfo") @Encrypt PersonInfoEntity personInfoEntity);
+
+    Page<PersonInfoEntity> queryPersonPageByCondition(Page<PersonInfoEntity> page, @Param("personInfo") @Encrypt PersonInfoEntity personInfoEntity);
 }
