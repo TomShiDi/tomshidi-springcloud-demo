@@ -39,6 +39,12 @@ class PersonInfoMapperTest{
     }
 
     @Test
+    void queryPersonByNameLike() {
+        List<PersonInfoEntity> personInfoEntityList = personInfoMapper.queryPersonByName("Tohka");
+        assertNotEquals(0, personInfoEntityList.size());
+    }
+
+    @Test
     void queryPersonByCondition() {
         PersonInfoEntity personInfoEntity = new PersonInfoEntity();
         personInfoEntity.setName("Tohka");

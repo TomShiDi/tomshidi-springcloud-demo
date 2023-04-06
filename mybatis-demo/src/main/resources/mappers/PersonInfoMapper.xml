@@ -14,6 +14,12 @@
         select `id`,`name`,`sex`,`desc`,`hire_date` from person_info t where t.id = #{id};
     </select>
 
+    <select id="queryPersonByName" parameterType="String" resultType="com.tomshidi.mybatis.model.PersonInfoEntity">
+        select `id`, `name`, `sex`, `desc`, `hire_date`
+        from person_info t
+        where t.name = #{name};
+    </select>
+
     <select id="queryPersonListByCondition" parameterType="com.tomshidi.mybatis.model.PersonInfoEntity" resultType="com.tomshidi.mybatis.model.PersonInfoEntity">
         select * from person_info t
         <where>

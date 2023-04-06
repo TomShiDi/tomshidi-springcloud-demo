@@ -4,6 +4,8 @@ import com.tomshidi.base.encrypt.config.EncryptConfig;
 import com.tomshidi.base.encrypt.util.SM4EncryptionUtil;
 import com.tomshidi.base.exceptions.BaseException;
 import org.bouncycastle.util.encoders.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
 
 import java.nio.charset.StandardCharsets;
@@ -49,6 +51,8 @@ public enum EncryptEnum {
     },
     ;
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(EncryptEnum.class);
+
     private String code;
 
     private String desc;
@@ -65,7 +69,13 @@ public enum EncryptEnum {
 
     public String decrypt(String cipherText, EncryptConfig encryptConfig) {
         Map<String, String> algorithmProperty = encryptConfig.getAlgorithmProperty(this.code);
-        return decrypt(cipherText, algorithmProperty.get("key"), algorithmProperty.get("iv"));
+        try {
+            return decrypt(cipherText, algorithmProperty.get("key"), algorithmProperty.get("iv"));
+        } catch (Exception e) {
+            LOGGER.error("解密失败，待解密原文为: " + cipherText, e);
+            return cipherText;
+        }
+
     }
 
     /**

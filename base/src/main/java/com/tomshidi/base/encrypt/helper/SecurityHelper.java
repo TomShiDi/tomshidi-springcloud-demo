@@ -46,6 +46,10 @@ public class SecurityHelper {
         if (method.isAnnotationPresent(Encrypt.class)) {
             Encrypt encrypt = method.getAnnotation(Encrypt.class);
             returnValue = enOrDecrypt(returnValue, encrypt, false);
+        } else if (encryptConfig.needEncrypt(returnValue.getClass())
+                || List.class.isAssignableFrom(returnValue.getClass())
+                || Set.class.isAssignableFrom(returnValue.getClass())) {
+            enOrDecrypt(returnValue, null, false);
         }
         return returnValue;
     }
@@ -66,6 +70,10 @@ public class SecurityHelper {
             if (parameter.isAnnotationPresent(Encrypt.class)) {
                 Encrypt encrypt = parameter.getAnnotation(Encrypt.class);
                 paramValues[i] = enOrDecrypt(arg, encrypt, true);
+            }else if (encryptConfig.needEncrypt(arg.getClass())
+                    || List.class.isAssignableFrom(arg.getClass())
+                    || Set.class.isAssignableFrom(arg.getClass())) {
+                enOrDecrypt(arg, null, true);
             }
         }
     }
@@ -111,15 +119,15 @@ public class SecurityHelper {
             }
             entityFieldEncryptDecrypt((Map<String, Object>) argValue, targetType, isEncrypt);
         } else if (List.class.isAssignableFrom(argValueType) || Set.class.isAssignableFrom(argValueType)) {
-            String targetName = encrypt.targetName();
-            Class<?> targetType = encrypt.targetType();
+            String targetName = encrypt == null ? "" : encrypt.targetName();
+            Class<?> targetType = encrypt == null ? argValueType : encrypt.targetType();
             // 集合参数需要指定实体类，否则无法判断是否需要加密
             if (Void.class.isAssignableFrom(targetType)) {
                 throw new BaseException("加解密参数为list/set时必须指定targetType");
             }
             entityFieldEncryptDecrypt((Collection<Object>) argValue, targetType, targetName, isEncrypt);
         } else {
-            Class<?> targetType = encrypt.targetType();
+            Class<?> targetType = encrypt == null ? argValueType : encrypt.targetType();
             // 简化注解字段填写，当直接使用实体类作为入参时，可以不指定targetType
             if (Void.class.isAssignableFrom(targetType)) {
                 targetType = argValueType;

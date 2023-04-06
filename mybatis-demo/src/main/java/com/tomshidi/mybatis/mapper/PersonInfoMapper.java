@@ -20,6 +20,8 @@ public interface PersonInfoMapper {
 
     PersonInfoEntity queryPersonById(@Param("id") String id);
 
+    List<PersonInfoEntity> queryPersonByName(@Param("name") @Encrypt(targetType = PersonInfoEntity.class, targetName = "name") String name);
+
     List<PersonInfoEntity> queryPersonListByCondition(@Param("personInfo") @Encrypt PersonInfoEntity personInfoEntity);
 
     Page<PersonInfoEntity> queryPersonPageByCondition(Page<PersonInfoEntity> page, @Param("personInfo") @Encrypt PersonInfoEntity personInfoEntity);
