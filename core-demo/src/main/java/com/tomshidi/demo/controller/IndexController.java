@@ -32,6 +32,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -73,6 +75,11 @@ public class IndexController extends BaseController {
         TimeUnit.SECONDS.sleep(timeout);
         LOGGER.info("睡眠结束");
         return "success";
+    }
+
+    @RequestMapping("/date-convert.do")
+    public Date dateConvert(@RequestParam(name = "date") Date date) {
+        return date;
     }
 
     @RequestMapping("/upload.do")

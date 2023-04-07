@@ -56,7 +56,7 @@ public class ControllerAdviceConfiguration implements ResponseBodyAdvice<Object>
 
     @InitBinder
     public void registerPersonalEditor(WebDataBinder webDataBinder) {
-        webDataBinder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), false));
+//        webDataBinder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), false));
     }
 
     @Override

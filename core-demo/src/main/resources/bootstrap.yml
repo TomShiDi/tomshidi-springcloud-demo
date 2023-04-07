@@ -18,6 +18,8 @@ spring:
             refresh: true
           - data-id: log-level.yaml
             refresh: true
+  jackson:
+    time-zone: GMT+8
 
 logging:
   config: classpath:logback-logstash.xml
