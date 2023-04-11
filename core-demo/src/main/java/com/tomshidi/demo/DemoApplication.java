@@ -37,7 +37,7 @@ public class DemoApplication {
         SpringApplication.run(DemoApplication.class, args);
         ApplicationContext applicationContext = ApplicationContextHolder.getApplicationContext();
         HttpFeignClient feignClient = applicationContext.getBean(HttpFeignClient.class);
-        String s = feignClient.get(new URI("https://kunpeng.csdn.net/ad/json/integrate/list?positions=932"), new HashMap<>(0));
+        String s = feignClient.get(new URI("https://img-home.csdnimg.cn/data_json/toolbar/toolbar1105.json"), new HashMap<>(0));
         LOGGER.info("feign远程调用结果为：{}", s);
     }
 

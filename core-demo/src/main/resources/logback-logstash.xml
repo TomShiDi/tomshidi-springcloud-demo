@@ -39,12 +39,7 @@
     </appender>
 
     <!-- 开发、测试环境 -->
-    <springProfile name="dev,test,qa,local">
-        <logger name="org.springframework.web" level="INFO"/>
-        <logger name="org.springboot.sample" level="INFO"/>
-        <logger name="cn.com.do1.component" level="DEBUG"/>
-        <logger name="com.alibaba.nacos.client.naming" level="ERROR" />
-        <logger name="com.netflix.hystrix.AbstractCommand" level="DEBUG"></logger>
+    <springProfile name="dev,test,qa,local,default">
         <root level="INFO">
             <if condition='property("logstash_enable").equals("true")'>
                 <then>
@@ -60,7 +55,6 @@
     <springProfile name="prod">
         <logger name="org.springframework.web" level="INFO"/>
         <logger name="org.springboot.sample" level="INFO"/>
-        <logger name="cn.com.do1.component" level="INFO"/>
         <root level="INFO">
             <if condition='property("logstash_enable").equals("true")'>
                 <then>

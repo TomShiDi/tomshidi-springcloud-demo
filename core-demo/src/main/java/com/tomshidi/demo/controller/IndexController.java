@@ -12,7 +12,6 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -52,9 +50,6 @@ public class IndexController extends BaseController {
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
     private RestTemplate restTemplate;
-
-    @Value("#{'${spring.banner.image}'.split(',')}")
-    private List<String> bannerList;
 
     @Autowired(required = false)
     private ServerMapInterceptor serverMapInterceptor;

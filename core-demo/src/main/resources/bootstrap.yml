@@ -1,6 +1,15 @@
+server:
+  port: 8090
 spring:
   profiles:
     active: dev
+  gson:
+    disable-html-escaping: true
+  mvc:
+    # 静态资源访问路径前缀
+    static-path-pattern: /static/**
+  jackson:
+    time-zone: GMT+8
   cloud:
 #    bootstrap:
 #      enabled: true
@@ -18,8 +27,6 @@ spring:
             refresh: true
           - data-id: log-level.yaml
             refresh: true
-  jackson:
-    time-zone: GMT+8
 
 logging:
   config: classpath:logback-logstash.xml
@@ -38,3 +45,29 @@ application:
       sm4:
         key: nGKoZHZZZJ0Q-NZZ
         iv: 1W320KJR4GZ5XAVQ
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+eureka:
+  client:
+    enabled: false
+    service-url:
+      defaultZone: http://192.168.1.66:8761/eureka
+
+tomshidi:
+  enabled: true
+  user-map:
+    tom:
+      - id: 1
+        name: tomshidi
+    tohka:
+      - id: 2
+        name: tohka
+  prefix: name
+  num: 1
+  name-1: tom
+  execution-time: 10S
