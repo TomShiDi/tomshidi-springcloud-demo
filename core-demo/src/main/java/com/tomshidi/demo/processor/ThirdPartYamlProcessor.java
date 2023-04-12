@@ -4,8 +4,7 @@ import com.tomshidi.demo.config.YamlSource;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.MutablePropertySources;
@@ -21,13 +20,13 @@ import java.util.Properties;
  * @date 2021/12/13 16:20
  */
 @Component
-public class ThirdPartYamlProcessor implements ApplicationContextAware, InstantiationAwareBeanPostProcessor {
+public class ThirdPartYamlProcessor implements InstantiationAwareBeanPostProcessor, EnvironmentAware {
 
-    private ApplicationContext applicationContext;
+    private Environment environment;
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
     }
 
     @Override
@@ -40,7 +39,6 @@ public class ThirdPartYamlProcessor implements ApplicationContextAware, Instanti
         yamlPropertiesFactoryBean.setResources(new ClassPathResource(yamlSource.path()));
         Properties properties = yamlPropertiesFactoryBean.getObject();
         if (properties != null) {
-            Environment environment = applicationContext.getEnvironment();
             ConfigurableEnvironment configurableEnvironment = (ConfigurableEnvironment) environment;
             MutablePropertySources propertySources = configurableEnvironment.getPropertySources();
             propertySources.addFirst(new PropertiesPropertySource("yamlProperties", properties));
