@@ -2,6 +2,7 @@ package com.tomshidi.demo.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -15,8 +16,9 @@ import java.io.IOException;
  * @author tomshidi
  * @date 2021/10/11 15:38
  */
-@WebFilter(urlPatterns = {"*"})
-//@Component
+// @WebFilter 的asyncSupported参数默认值是false，会导致异步请求失败
+//@WebFilter(urlPatterns = {"*"}, asyncSupported = true)
+@Component
 public class DispatcherFilter implements Filter {
 
     private static Logger logger = LoggerFactory.getLogger(DispatcherFilter.class);
