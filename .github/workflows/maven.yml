@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Tomshidi CI with Maven
+name: Tomshidi CI With Maven
 
 on:
   push:
