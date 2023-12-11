@@ -43,6 +43,11 @@ public class AdviceController {
         return 2 / 0;
     }
 
+    @GetMapping(path = "/string")
+    public Object returnString() {
+        return "Hello World";
+    }
+
     @Autowired
     public void setTomshidiConfig(TomshidiConfig tomshidiConfig) {
         this.tomshidiConfig = tomshidiConfig;

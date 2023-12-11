@@ -36,13 +36,13 @@ import java.util.Map;
 
 /**
  * @author tomshidi
- * @date 2023/1/29 14:37
+ * @since 2023/1/29 14:37
  */
 @Configuration
 @RestControllerAdvice(basePackages = "com.tomshidi.demo")
 public class ControllerAdviceConfiguration implements ResponseBodyAdvice<Object>, RequestBodyAdvice {
 
-    private final static Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").serializeNulls().create();
+    private final static Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").serializeNulls().setPrettyPrinting().create();
     private final static Logger LOGGER = LoggerFactory.getLogger(ControllerAdviceConfiguration.class);
 
     @ExceptionHandler(Throwable.class)
@@ -71,11 +71,17 @@ public class ControllerAdviceConfiguration implements ResponseBodyAdvice<Object>
                                   Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   ServerHttpRequest request,
                                   ServerHttpResponse response) {
-        if (!selectedContentType.includes(MediaType.APPLICATION_JSON)) {
-            return body;
-        }
+        // 如果没有该判断，那么当controller中方法返回参数声明为Object且实际返回String类型时会报类型转换异常
+//        if (!selectedContentType.includes(MediaType.APPLICATION_JSON)) {
+//            return body;
+//        }
         CommonResponse<Object> result = CommonResponse.SUCCESS();
         result.setData(body);
+        // 返回值类型为CharSequence的接口，如果body变为其他类型，
+        // 会导致StringHttpMessageConverter中发生入参类型不匹配报错
+        if (body instanceof CharSequence) {
+            return GSON.toJson(result);
+        }
         return result;
     }
 
