@@ -12,6 +12,7 @@
         <module>model</module>
         <module>base</module>
         <module>mybatis-demo</module>
+        <module>zookeeper-demo</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
