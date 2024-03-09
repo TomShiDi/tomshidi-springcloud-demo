@@ -14,6 +14,7 @@
         <module>mybatis-demo</module>
         <module>zookeeper-demo</module>
         <module>hadoop-demo</module>
+        <module>flume-demo</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
