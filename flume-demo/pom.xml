@@ -8,4 +8,12 @@
     </parent>
     <artifactId>flume-demo</artifactId>
     <name>flume-demo</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.flume</groupId>
+            <artifactId>flume-ng-core</artifactId>
+            <version>1.9.0</version>
+        </dependency>
+    </dependencies>
 </project>
