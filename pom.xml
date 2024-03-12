@@ -15,6 +15,7 @@
         <module>zookeeper-demo</module>
         <module>hadoop-demo</module>
         <module>flume-demo</module>
+        <module>kafka-demo</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
