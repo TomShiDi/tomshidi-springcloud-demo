@@ -8,4 +8,12 @@
     </parent>
     <artifactId>kafka-demo</artifactId>
     <name>kafka-demo</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+    </dependencies>
 </project>
