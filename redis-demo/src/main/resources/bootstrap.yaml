@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: redis-demo
+  redis:
+    host: local-middleware
+    port: 6379
+    password: toor
+tomshidi:
+  flow-limit:
+    rate: 1000
+    capacity: 1000
