@@ -17,6 +17,7 @@
         <module>flume-demo</module>
         <module>kafka-demo</module>
         <module>redis-demo</module>
+        <module>datax-demo</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

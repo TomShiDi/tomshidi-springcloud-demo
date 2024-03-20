@@ -1,0 +1,82 @@
+{
+  "job": {
+    "content": [
+      {
+        "reader": {
+          "name": "mysqlreader",
+          "parameter": {
+            "column": [
+              "id",
+              "activity_name",
+              "activity_type",
+              "activity_desc",
+              "start_time",
+              "end_time",
+              "create_time"
+            ],
+            "connection": [
+              {
+                "jdbcUrl": [
+                  "jdbc:mysql://node1:3306/gmall"
+                ],
+                "table": [
+                  "activity_info"
+                ]
+              }
+            ],
+            "password": "15576123138",
+            "splitPk": "",
+            "username": "root"
+          }
+        },
+        "writer": {
+          "name": "hdfswriter",
+          "parameter": {
+            "column": [
+              {
+                "name": "id",
+                "type": "bigint"
+              },
+              {
+                "name": "activity_name",
+                "type": "string"
+              },
+              {
+                "name": "activity_type",
+                "type": "string"
+              },
+              {
+                "name": "activity_desc",
+                "type": "string"
+              },
+              {
+                "name": "start_time",
+                "type": "string"
+              },
+              {
+                "name": "end_time",
+                "type": "string"
+              },
+              {
+                "name": "create_time",
+                "type": "string"
+              }
+            ],
+            "compress": "gzip",
+            "defaultFS": "hdfs://node1:8020",
+            "fieldDelimiter": "\t",
+            "fileName": "activity_info",
+            "fileType": "text",
+            "path": "${targetdir}",
+            "writeMode": "append"
+          }
+        }
+      }
+    ],
+    "setting": {
+      "speed": {
+        "channel": 1
+      }
+    }
+  }
+}
