@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "tomshidi.flow-limit")
 public class FlowLimitConfig {
-    private String limitKeyPrefix = "limit_";
+    private String limitKeyPrefix = "limit::";
 
     private Double rate = 1.0;
 

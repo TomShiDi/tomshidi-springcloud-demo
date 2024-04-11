@@ -9,8 +9,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.OutputStream;
@@ -18,9 +20,9 @@ import java.nio.file.Files;
 
 @RestController
 @RequestMapping("/file")
-public class FileDownloadController {
+public class FileTransportController {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FileDownloadController.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(FileTransportController.class);
 
     /**
      * 使用apache压缩工具，分片传输文件
@@ -56,4 +58,8 @@ public class FileDownloadController {
                 .body(responseBody);
     }
 
+    @PostMapping("/upload")
+    public String upload(MultipartFile file) {
+        return file.getOriginalFilename();
+    }
 }
