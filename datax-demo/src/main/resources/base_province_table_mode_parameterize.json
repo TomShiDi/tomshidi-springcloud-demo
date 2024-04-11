@@ -1,0 +1,78 @@
+{
+  "job": {
+    "content": [
+      {
+        "reader": {
+          "name": "mysqlreader",
+          "parameter": {
+            "column": [
+              "id",
+              "name",
+              "region_id",
+              "area_code",
+              "iso_code",
+              "iso_3166_2"
+            ],
+            "connection": [
+              {
+                "jdbcUrl": [
+                  "jdbc:mysql://node1:3306/gmall"
+                ],
+                "table": [
+                  "base_province"
+                ]
+              }
+            ],
+            "password": "15576123138",
+            "username": "root",
+            "where": "id>=3",
+            "splitPk": ""
+          }
+        },
+        "writer": {
+          "name": "hdfswriter",
+          "parameter": {
+            "column": [
+              {
+                "name": "id",
+                "type": "bigint"
+              },
+              {
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "name": "region_id",
+                "type": "string"
+              },
+              {
+                "name": "area_code",
+                "type": "string"
+              },
+              {
+                "name": "iso_code",
+                "type": "string"
+              },
+              {
+                "name": "iso_3166_2",
+                "type": "string"
+              }
+            ],
+            "compress": "gzip",
+            "defaultFS": "hdfs://node1:8020",
+            "fieldDelimiter": "\t",
+            "fileName": "base_province",
+            "fileType": "text",
+            "path": "/base_province/${date}",
+            "writeMode": "append"
+          }
+        }
+      }
+    ],
+    "setting": {
+      "speed": {
+        "channel": "1"
+      }
+    }
+  }
+}
