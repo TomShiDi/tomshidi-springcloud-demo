@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 
 /**
- * @author tangshili
+ * @author tomshidi
  * @since 2023/4/12 16:47
  */
 @Configuration

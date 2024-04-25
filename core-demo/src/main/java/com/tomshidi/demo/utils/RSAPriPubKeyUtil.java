@@ -18,7 +18,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 /**
- * @author tangshili
+ * @author tomshidi
  * @since 2024/4/10 16:06
  */
 public class RSAPriPubKeyUtil {

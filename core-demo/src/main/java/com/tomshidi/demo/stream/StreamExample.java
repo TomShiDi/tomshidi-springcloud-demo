@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 /**
  * jdk stream api 用例
- * @author tangshili
+ * @author tomshidi
  * @since 2023/4/10 17:02
  */
 public class StreamExample {

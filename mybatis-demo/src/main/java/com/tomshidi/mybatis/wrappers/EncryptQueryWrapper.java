@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 /**
  * 对实体字段动态加密
- * @author tangshili
+ * @author tomshidi
  * @since 2023/3/28 13:53
  */
 public class EncryptQueryWrapper<T> extends QueryWrapper<T> {

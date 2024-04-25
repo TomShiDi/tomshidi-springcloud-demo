@@ -1,7 +1,7 @@
 package com.tomshidi.demo.dto;
 
 /**
- * @author tangshili
+ * @author tomshidi
  * @since 2023/3/29 16:55
  */
 public class SystemVersionInfo {

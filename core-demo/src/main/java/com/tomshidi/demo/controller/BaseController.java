@@ -3,7 +3,7 @@ package com.tomshidi.demo.controller;
 import com.tomshidi.demo.dto.SystemVersionInfo;
 
 /**
- * @author tangshili
+ * @author tomshidi
  * @since 2023/3/29 16:54
  */
 public abstract class BaseController {

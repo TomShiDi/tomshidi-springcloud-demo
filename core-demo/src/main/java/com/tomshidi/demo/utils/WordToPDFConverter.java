@@ -14,7 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
- * @author tangshili
+ * @author tomshidi
  * @since 2023/12/11 13:59
  */
 public class WordToPDFConverter {
