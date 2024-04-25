@@ -96,4 +96,12 @@ public interface TreePathTableMapper {
      * @return 路径信息
      */
     List<TreePathTable> findAllParentTreePath(@Param("currNodeId") String currNodeId);
+
+    /**
+     * 查找当前节点的所有子节点，并将同一层的节点拼接为字符串
+     *
+     * @param currNodeId 当前节点
+     * @return list的第一个元素为当前节点，第二个元素为第一层子节点id串，第三个元素为第二层子节点id串，以此类推
+     */
+    List<String> findLevelChildren(@Param("currNodeId") String currNodeId);
 }

@@ -8,7 +8,7 @@ import java.util.List;
  * @author tomshidi
  * @date 2023/2/8 14:45
  */
-public interface TreePathTableService {
+public interface TreePathOperator {
 
     /**
      * 查找所有的子节点
@@ -63,4 +63,12 @@ public interface TreePathTableService {
      * @param nodeId 节点id
      */
     void deleteNodeSafe(String nodeId);
+
+    /**
+     * 查找当前节点的所有子节点，同一层的节点位于同一个list中
+     *
+     * @param currNodeId 当前节点
+     * @return list的第一个元素为当前节点，第二个元素为第一层子节点id列表，第三个元素为第二层子节点id列表，以此类推
+     */
+    List<List<String>> findLevelChildren(String currNodeId);
 }

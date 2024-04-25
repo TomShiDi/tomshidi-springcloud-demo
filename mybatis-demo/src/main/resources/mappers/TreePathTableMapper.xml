@@ -87,4 +87,8 @@
         from tree_path_table t
         where t.descendant = #{currNodeId};
     </select>
+    
+    <select id="findLevelChildren" resultType="String">
+        select group_concat(T.descendant order by T.descendant separator ',') from tree_path_table T where T.ancestor = #{currNodeId} group by T.distance order by T.distance asc
+    </select>
 </mapper>

@@ -3,17 +3,15 @@ package com.tomshidi.mybatis.service.impl;
 
 import com.tomshidi.mybatis.model.TreePathTable;
 import com.tomshidi.mybatis.mapper.TreePathTableMapper;
-import com.tomshidi.mybatis.service.TreePathTableService;
+import com.tomshidi.mybatis.service.TreePathOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author tomshidi
@@ -21,7 +19,7 @@ import java.util.Map;
  */
 @Service
 @Transactional(rollbackFor = Throwable.class)
-public class TreePathTableServiceImpl implements TreePathTableService {
+public class TreePathOperatorImpl implements TreePathOperator {
 
     private TreePathTableMapper treePathTableMapper;
 
@@ -138,5 +136,17 @@ public class TreePathTableServiceImpl implements TreePathTableService {
         treePathTableMapper.deleteByDescendants(Collections.singletonList(nodeId));
         // 删除当前节点到子节点的路径
         treePathTableMapper.deleteByAncestors(Collections.singletonList(nodeId));
+    }
+
+    @Override
+    public List<List<String>> findLevelChildren(String currNodeId) {
+        List<String> idStrList = treePathTableMapper.findLevelChildren(currNodeId);
+        List<List<String>> resultList = new ArrayList<>();
+        if (idStrList == null) {
+            return resultList;
+        }
+        return idStrList.stream()
+                .map(item -> Stream.of(item.split(",")).collect(Collectors.toList()))
+                .collect(Collectors.toList());
     }
 }

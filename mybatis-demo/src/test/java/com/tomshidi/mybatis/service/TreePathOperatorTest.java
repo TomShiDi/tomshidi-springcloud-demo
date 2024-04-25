@@ -9,10 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @date 2023/2/8 15:41
  */
 @SpringBootTest
-class TreePathTableServiceTest {
+class TreePathOperatorTest {
 
     @Autowired
-    private TreePathTableService treePathTableService;
+    private TreePathOperator treePathOperator;
 
     @Test
     void findChildNodeIds() {
@@ -32,27 +32,27 @@ class TreePathTableServiceTest {
 
     @Test
     void addNode() {
-        treePathTableService.addNode("0", "0");
-        treePathTableService.addNode("1", "0");
-        treePathTableService.addNode("2", "1");
-        treePathTableService.addNode("3", "1");
-        treePathTableService.addNode("4", "0");
-        treePathTableService.addNode("5", "3");
-        treePathTableService.addNode("6", "3");
+        treePathOperator.addNode("0", "0");
+        treePathOperator.addNode("1", "0");
+        treePathOperator.addNode("2", "1");
+        treePathOperator.addNode("3", "1");
+        treePathOperator.addNode("4", "0");
+        treePathOperator.addNode("5", "3");
+        treePathOperator.addNode("6", "3");
     }
 
     @Test
     void changeNodeParent() {
-        treePathTableService.changeNodeParent("1","0");
+        treePathOperator.changeNodeParent("1","0");
     }
 
     @Test
     void deleteNode() {
-        treePathTableService.deleteNode("1");
+        treePathOperator.deleteNode("1");
     }
 
     @Test
     void deleteNodeSafe() {
-        treePathTableService.deleteNodeSafe("2");
+        treePathOperator.deleteNodeSafe("2");
     }
 }
