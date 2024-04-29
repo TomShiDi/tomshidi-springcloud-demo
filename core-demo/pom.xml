@@ -10,42 +10,23 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>core-demo</artifactId>
-    <name>核心功能模块(其实就是懒得拆分)</name>
+    <name>core-demo</name>
 
     <dependencies>
         <dependency>
             <groupId>com.tomshidi</groupId>
-            <artifactId>base</artifactId>
+            <artifactId>infrastructure</artifactId>
             <version>${version}</version>
         </dependency>
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.apache.logging.log4j</groupId>-->
-        <!--            <artifactId>log4j-core</artifactId>-->
-        <!--        </dependency>-->
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.slf4j</groupId>-->
-        <!--            <artifactId>log4j-over-slf4j</artifactId>-->
-        <!--        </dependency>-->
-
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.cloud</groupId>-->
-        <!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
-        <!--            <version>2.1.0.RC3</version>-->
-        <!--        </dependency>-->
 
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>2021.0.1.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-            <version>2021.0.1.0</version>
         </dependency>
 
         <dependency>

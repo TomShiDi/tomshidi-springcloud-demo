@@ -6,18 +6,14 @@
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>base</artifactId>
-    <name>base基础能力模块</name>
+    <artifactId>domain</artifactId>
+    <name>[domain]公共实体模块</name>
 
     <dependencies>
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <scope>compile</scope>
+            <groupId>com.tomshidi</groupId>
+            <artifactId>infrastructure</artifactId>
+            <version>${version}</version>
         </dependency>
     </dependencies>
 </project>

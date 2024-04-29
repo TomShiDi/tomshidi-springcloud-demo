@@ -9,8 +9,8 @@
         <module>rpc-consumer</module>
         <module>es-demo</module>
         <module>mongodb-demo</module>
-        <module>model</module>
-        <module>base</module>
+        <module>domain</module>
+        <module>infrastructure</module>
         <module>mybatis-demo</module>
         <module>zookeeper-demo</module>
         <module>hadoop-demo</module>
@@ -54,9 +54,30 @@
                 <version>2021.0.1.0</version>
             </dependency>
             <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-boot-starter</artifactId>
-                <version>3.0.0</version>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+                <version>2021.0.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+                <version>2021.0.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+                <version>2.1.0.RC3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>1.6.14</version>
+            </dependency>
+            <!-- 配合 spring security 的依赖 -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-security</artifactId>
+                <version>1.6.14</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
