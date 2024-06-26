@@ -1,5 +1,7 @@
 package com.tomshidi.demo.dto;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -12,6 +14,20 @@ public class ProjectDto {
     private String markName;
 
     private List<LandRangeDto> landRange;
+
+    private String allSum;
+
+    public void calculate() {
+        if (landRange == null) {
+            return;
+        }
+        allSum = landRange.stream()
+                .map(item -> BigDecimal.valueOf(Double.valueOf(item.getArea())))
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO)
+                .setScale(2, RoundingMode.CEILING)
+                .toString();
+    }
 
     public String getName() {
         return name;
@@ -35,5 +51,13 @@ public class ProjectDto {
 
     public void setLandRange(List<LandRangeDto> landRange) {
         this.landRange = landRange;
+    }
+
+    public String getAllSum() {
+        return allSum;
+    }
+
+    public void setAllSum(String allSum) {
+        this.allSum = allSum;
     }
 }

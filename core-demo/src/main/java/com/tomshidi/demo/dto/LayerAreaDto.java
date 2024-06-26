@@ -5,15 +5,24 @@ package com.tomshidi.demo.dto;
  * @since 2024/6/15 17:18
  */
 public class LayerAreaDto {
-    private String fieldAlias;
+    private String geoName;
+    private String fieldAlia;
     private String area;
 
-    public String getFieldAlias() {
-        return fieldAlias;
+    public String getGeoName() {
+        return geoName;
     }
 
-    public void setFieldAlias(String fieldAlias) {
-        this.fieldAlias = fieldAlias;
+    public void setGeoName(String geoName) {
+        this.geoName = geoName;
+    }
+
+    public String getFieldAlia() {
+        return fieldAlia;
+    }
+
+    public void setFieldAlia(String fieldAlia) {
+        this.fieldAlia = fieldAlia;
     }
 
     public String getArea() {

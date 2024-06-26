@@ -16,6 +16,16 @@ public class FormDataDto {
 
     private List<LayerLinkDto> layerLink;
 
+    public void calculate() {
+        buildPoiImage();
+        if (project != null) {
+            project.calculate();
+        }
+        if (layerLink != null) {
+            layerLink.forEach(LayerLinkDto::calculate);
+        }
+    }
+
     public void buildPoiImage() {
         if (project != null && project.getLandRange() != null) {
             for (LandRangeDto landRangeDto: project.getLandRange()) {

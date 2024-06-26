@@ -4,6 +4,8 @@ import com.deepoove.poi.data.PictureRenderData;
 import com.deepoove.poi.data.PictureType;
 import com.deepoove.poi.data.Pictures;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -20,6 +22,20 @@ public class GeoDataDto {
     private String image;
 
     private PictureRenderData imagePoi;
+
+    private String singleAreaSum;
+
+    public void calculate() {
+        if (layerField == null) {
+            return;
+        }
+        layerField.forEach(item -> item.setGeoName(name));
+        singleAreaSum = layerField.stream()
+                .map(item -> BigDecimal.valueOf(Double.parseDouble(item.getArea())))
+                .reduce(BigDecimal::add).orElse(BigDecimal.ZERO)
+                .setScale(2, RoundingMode.CEILING).toString();
+        buildPoiImage();
+    }
 
     public void buildPoiImage() {
         if (image != null) {
@@ -70,5 +86,13 @@ public class GeoDataDto {
 
     public void setImagePoi(PictureRenderData imagePoi) {
         this.imagePoi = imagePoi;
+    }
+
+    public String getSingleAreaSum() {
+        return singleAreaSum;
+    }
+
+    public void setSingleAreaSum(String singleAreaSum) {
+        this.singleAreaSum = singleAreaSum;
     }
 }
