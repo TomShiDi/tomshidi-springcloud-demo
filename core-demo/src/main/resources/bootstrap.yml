@@ -1,6 +1,16 @@
 server:
   port: 8090
+  tomcat:
+    connection-timeout: 100MS
+    keep-alive-timeout: 200MS
+
 spring:
+  codec:
+    max-in-memory-size: 10MB #HTTP解码相关
+  servlet:
+    multipart:
+      max-file-size: 2GB
+      max-request-size: 2GB
   profiles:
     active: dev
   gson:

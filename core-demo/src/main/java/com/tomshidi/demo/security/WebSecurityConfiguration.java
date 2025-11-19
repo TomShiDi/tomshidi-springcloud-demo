@@ -10,7 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
- * @author tangshili
+ * @author tomshidi
  * @since 2023/4/12 16:47
  */
 @Configuration

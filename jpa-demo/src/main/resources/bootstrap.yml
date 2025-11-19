@@ -1,0 +1,22 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:postgresql://192.168.14.14:62237/pdg?currentSchema=pdg
+    driver-class-name: org.postgresql.Driver
+    username: pdg
+    password: WP.(C<kzauA!
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+logging:
+  config: classpath:logback-logstash.xml
+  # config: http://${spring.cloud.nacos.config.server-addr}/nacos/v1/cs/configs?group=DEFAULT_GROUP&tenant=${spring.cloud.nacos.config.namespace}&dataId=logback-nacos.xml
+  logstash:
+    enable: false
+    file: ${spring.application.name}.log
+    host: 192.168.83.55
+    port: 9250
+

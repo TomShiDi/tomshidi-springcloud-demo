@@ -13,7 +13,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import java.io.Serializable;
 
 /**
- * @author tangshili
+ * @author tomshidi
  * @since 2023/4/12 15:57
  */
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)

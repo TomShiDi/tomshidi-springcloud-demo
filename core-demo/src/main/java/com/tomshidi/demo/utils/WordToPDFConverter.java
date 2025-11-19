@@ -3,6 +3,8 @@ package com.tomshidi.demo.utils;
 import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.config.Configure;
 import com.deepoove.poi.plugin.table.LoopRowTableRenderPolicy;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.BaseFont;
 import fr.opensagres.poi.xwpf.converter.pdf.PdfConverter;
 import fr.opensagres.poi.xwpf.converter.pdf.PdfOptions;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -14,7 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
- * @author tangshili
+ * @author tomshidi
  * @since 2023/12/11 13:59
  */
 public class WordToPDFConverter {
@@ -25,7 +27,7 @@ public class WordToPDFConverter {
         FileInputStream inputStream = new FileInputStream(wordFile);
         XWPFDocument document = new XWPFDocument(inputStream);
         PdfOptions options = PdfOptions.create();
-        options.fontEncoding("Identity-H");
+//        BaseFont baseFont = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
         LOGGER.info("使用编码为：{}", options.getFontEncoding());
         String wordFilePath = wordFile.getPath();
         String pdfFilePath = wordFilePath.substring(0, wordFilePath.lastIndexOf(".")) + ".pdf";
@@ -35,7 +37,7 @@ public class WordToPDFConverter {
         return pdfFile;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, DocumentException {
         LoopRowTableRenderPolicy policy = new LoopRowTableRenderPolicy();
         Configure config = Configure.builder()
                 .bind("applicationDatas", policy).build();

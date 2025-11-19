@@ -10,13 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>mybatis-demo</artifactId>
-    <name>mybatis功能模块</name>
+    <name>mybatis-demo</name>
 
     <dependencies>
         <dependency>
             <groupId>com.tomshidi</groupId>
-            <artifactId>model</artifactId>
-            <version>${version}</version>
+            <artifactId>domain</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>

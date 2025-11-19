@@ -10,12 +10,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>core-demo</artifactId>
-    <name>核心功能模块(其实就是懒得拆分)</name>
+    <name>core-demo</name>
 
     <dependencies>
         <dependency>
             <groupId>com.tomshidi</groupId>
-            <artifactId>base</artifactId>
+            <artifactId>infrastructure</artifactId>
             <version>${version}</version>
         </dependency>
 

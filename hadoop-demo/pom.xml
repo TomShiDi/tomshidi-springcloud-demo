@@ -7,7 +7,7 @@
         <version>1.0.0</version>
     </parent>
     <artifactId>hadoop-demo</artifactId>
-    <name>hadoop示例</name>
+    <name>hadoop-demo</name>
 
     <properties>
         <hadoop-version>2.7.5</hadoop-version>
