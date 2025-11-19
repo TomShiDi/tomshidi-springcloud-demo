@@ -29,7 +29,7 @@ spring:
             refresh: true
 
 logging:
-  config: classpath:logback-logstash.xml
+#  config: classpath:logback-logstash.xml
   # config: http://${spring.cloud.nacos.config.server-addr}/nacos/v1/cs/configs?group=DEFAULT_GROUP&tenant=${spring.cloud.nacos.config.namespace}&dataId=logback-nacos.xml
   logstash:
     enable: false
