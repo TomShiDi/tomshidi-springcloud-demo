@@ -1,6 +1,7 @@
 package com.tomshidi.demo.proxy;
 
 import com.tomshidi.demo.threads.ExtraParam;
+import jakarta.servlet.http.Cookie;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -8,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 
-import javax.servlet.http.Cookie;
 import java.lang.reflect.Method;
 
 /**

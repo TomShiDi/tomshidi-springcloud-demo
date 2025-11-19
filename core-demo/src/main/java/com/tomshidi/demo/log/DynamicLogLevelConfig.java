@@ -6,12 +6,12 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.util.ContextSelectorStaticBinder;
 import ch.qos.logback.core.Appender;
+import jakarta.annotation.PreDestroy;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import javax.annotation.PreDestroy;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;

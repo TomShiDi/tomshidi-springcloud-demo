@@ -2,12 +2,12 @@ package com.tomshidi.demo.threadpool;
 
 import com.tomshidi.demo.proxy.CgProxyFactory;
 import com.tomshidi.demo.threads.ExtraParam;
+import jakarta.servlet.http.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.Cookie;
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;

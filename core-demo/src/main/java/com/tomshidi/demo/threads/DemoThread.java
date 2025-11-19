@@ -2,11 +2,11 @@ package com.tomshidi.demo.threads;
 
 import com.tomshidi.demo.proxy.CgProxyFactory;
 import com.tomshidi.demo.utils.RequestUtil;
+import jakarta.servlet.http.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 
-import javax.servlet.http.Cookie;
 import java.io.IOException;
 
 /**
