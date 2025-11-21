@@ -14,6 +14,8 @@
     <modules>
         <module>helloworld-01</module>
         <module>ollama02</module>
+        <module>chatclient03</module>
+        <module>multi-model-04</module>
     </modules>
 
     <properties>
