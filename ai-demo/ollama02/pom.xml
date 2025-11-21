@@ -9,13 +9,21 @@
         <version>1.0.0</version>
     </parent>
 
-    <groupId>com.tomshidi.ai-demo</groupId>
-    <artifactId>helloworld</artifactId>
+    <groupId>com.tomshidi.aidemo</groupId>
+    <artifactId>ollama02</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-model-ollama</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>
