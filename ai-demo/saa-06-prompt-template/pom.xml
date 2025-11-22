@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>com.tomshidi.aidemo</groupId>
-    <artifactId>multi-model-04</artifactId>
+    <artifactId>saa-06-prompt-template</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

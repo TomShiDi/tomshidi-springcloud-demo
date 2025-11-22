@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本输入与展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 600;
+            position: relative;
+        }
+
+        h1:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5ee;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #6a11cb;
+            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+        }
+
+        .display-box {
+            background-color: #f8f9fa;
+            border: 2px solid #e1e5ee;
+            border-radius: 10px;
+            padding: 15px;
+            min-height: 150px;
+            margin-bottom: 25px;
+            transition: all 0.3s;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        .display-box.empty {
+            color: #999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-style: italic;
+        }
+
+        .display-box.filled {
+            color: #333;
+        }
+
+        .btn-container {
+            text-align: center;
+        }
+
+        button {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(106, 17, 203, 0.4);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 15px;
+            color: #6a11cb;
+            font-weight: 500;
+            height: 20px;
+            transition: all 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            textarea {
+                min-height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>AI聊天</h1>
+
+    <div class="input-group">
+        <label for="textInput">请输入文本：</label>
+        <textarea id="textInput" placeholder="在这里输入您想要发送的文本..."></textarea>
+    </div>
+
+    <div class="display-box empty" id="displayBox">
+
+    </div>
+
+    <div class="btn-container">
+        <button id="sendBtn">发送文本</button>
+    </div>
+
+    <div class="message" id="tipMessage"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const textInput = document.getElementById('textInput');
+        const displayBox = document.getElementById('displayBox');
+        const sendBtn = document.getElementById('sendBtn');
+        const tipMessage = document.getElementById('tipMessage');
+
+        // 发送按钮点击事件
+        sendBtn.addEventListener('click', function() {
+            const inputText = textInput.value.trim();
+
+            if (inputText === '') {
+                alert('请输入文本内容！');
+                return;
+            }
+
+            // 1. 客户端使用js的EventSource对象链接到服务器的特定端点
+            const eventSource = new EventSource('/multi-model/streamChat?msg=' + encodeURIComponent(inputText));
+
+            // 2. 监听消息事件
+            eventSource.onmessage = function (event) {
+                const data = event.data;
+                // 更新显示框
+                displayBox.textContent += data;
+                displayBox.classList.remove('empty');
+                displayBox.classList.add('filled');
+            };
+
+            // 3. 监听错误事件，当链接断开时触发
+            eventSource.onerror = function (event) {
+                showMessage('连接已关闭或发生错误。' + event, 'error');
+                eventSource.close();
+            };
+
+
+            // 显示成功消息
+            showMessage('文本发送成功！', 'success');
+
+            // 自动清除消息
+            setTimeout(() => {
+                clearMessage();
+            }, 8000);
+        });
+
+        // 输入框变化时启用/禁用按钮
+        textInput.addEventListener('input', function() {
+            if (this.value.trim() !== '') {
+                sendBtn.disabled = false;
+            } else {
+                sendBtn.disabled = true;
+            }
+        });
+
+        // 初始状态禁用按钮
+        sendBtn.disabled = true;
+
+        // 显示消息函数
+        function showMessage(text, type) {
+            tipMessage.textContent = text;
+            tipMessage.style.color = type === 'error' ? '#e74c3c' : '#6a11cb';
+        }
+
+        // 清除消息函数
+        function clearMessage() {
+            tipMessage.textContent = '';
+        }
+
+        // 按Enter发送文本
+        textInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                sendBtn.click();
+            }
+        });
+    });
+</script>
+</body>
+</html>

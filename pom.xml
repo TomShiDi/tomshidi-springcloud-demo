@@ -21,6 +21,8 @@
         <module>jpa-demo</module>
         <module>code-test</module>
         <module>ai-demo</module>
+        <module>ai-demo/saa-07-structured-output</module>
+        <module>ai-demo/saa-08-chat-persistent</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

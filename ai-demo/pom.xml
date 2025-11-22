@@ -12,10 +12,12 @@
     <artifactId>ai-demo</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>helloworld-01</module>
-        <module>ollama02</module>
-        <module>chatclient03</module>
-        <module>multi-model-04</module>
+        <module>saa-01-helloworld</module>
+        <module>saa-02-ollama</module>
+        <module>saa-03chat-client</module>
+        <module>saa-04-multi-model</module>
+        <module>saa-05-chat-prompt</module>
+        <module>saa-06-prompt-template</module>
     </modules>
 
     <properties>
