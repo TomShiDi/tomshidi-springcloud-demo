@@ -42,7 +42,7 @@
         </dependency>
     </dependencies>
 
-    <!-- <repositories>
+    <repositories>
         <repository>
             <id>spring</id>
             <url>https://maven.aliyun.com/repository/spring</url>
@@ -53,5 +53,5 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-    </repositories> -->
+    </repositories>
 </project>
