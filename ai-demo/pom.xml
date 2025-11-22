@@ -18,6 +18,9 @@
         <module>saa-04-multi-model</module>
         <module>saa-05-chat-prompt</module>
         <module>saa-06-prompt-template</module>
+        <module>saa-09-text-to-image</module>
+        <module>saa-10-text-to-voice</module>
+        <module>saa-11-embed-to-vector</module>
     </modules>
 
     <properties>

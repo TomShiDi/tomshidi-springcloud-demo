@@ -1,0 +1,37 @@
+server:
+  port: 8011
+  servlet:
+    # 大模型对话中文乱码UTF-8编码处理
+    encoding:
+      enabled: true
+      force: true
+      charset: UTF-8
+
+spring:
+  application:
+    name: SAA-Embed-To-Vector
+  output:
+    ansi:
+      enabled: always
+    # spring-alibaba-ai配置
+  ai:
+    dashscope:
+#      base-url: https://dashscope.aliyuncs.com
+      api-key: ${DASHSCOPE_API_KEY}
+      chat:
+        options:
+#           qwen-plus
+          model: deepseek-v3
+      embedding:
+        options:
+          model: text-embedding-v3
+    vectorstore:
+      redis:
+        initialize-schema: true
+        index-name: custom-index
+        prefix: custom-prefix
+  data:
+    redis:
+      host: local-middleware
+      port: 6479
+#      password: toor
