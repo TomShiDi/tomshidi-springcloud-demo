@@ -1,4 +1,4 @@
-FROM tomshidi/jdk:jdk8u212_aliyun_1
+FROM ringcentral/jdk:21.0.5-noble
 
 # 环境变量
 ENV WORK_PATH /home/project/app
