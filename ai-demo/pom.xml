@@ -18,6 +18,14 @@
         <module>saa-04-multi-model</module>
         <module>saa-05-chat-prompt</module>
         <module>saa-06-prompt-template</module>
+        <module>saa-09-text-to-image</module>
+        <module>saa-10-text-to-voice</module>
+        <module>saa-11-embed-to-vector</module>
+        <module>saa-12-rag4aiops</module>
+        <module>saa-13-tool-calling</module>
+        <module>saa-14-local-mcp-server</module>
+        <module>saa-15-local-mcp-client</module>
+        <module>saa-16-call-baidu-mcp</module>
     </modules>
 
     <properties>
@@ -45,6 +53,12 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
         <!-- Spring AI Alibaba Agent Framework -->
 <!--        <dependency>-->
 <!--            <groupId>com.alibaba.cloud.ai</groupId>-->
