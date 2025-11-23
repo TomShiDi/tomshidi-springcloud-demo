@@ -1,0 +1,21 @@
+server:
+  port: 8014
+  servlet:
+    # 大模型对话中文乱码UTF-8编码处理
+    encoding:
+      enabled: true
+      force: true
+      charset: UTF-8
+
+spring:
+  application:
+    name: SAA-local-mcp-server
+  output:
+    ansi:
+      enabled: always
+  ai:
+    mcp:
+      server:
+        type: sync
+        name: tomshidi-mcp-server
+        version: 1.0.0

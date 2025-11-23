@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "baidu-map": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@baidumap/mcp-server-baidu-map"
+      ],
+      "env": {
+        "BAIDU_MAP_API_KEY": "9YlaWhROPPDGt1NQHvh2fB7QKvWhhY4B"
+      }
+    }
+  }
+}
+
+// 构建McpTransport协议
+
+// cmd: 启动Window命令行解释器
+// /c: 告诉cmd执行完后关闭命令行窗口
+// npx: 等同于npm execute package ,Node.js的工具，用于指定npm包中的可执行文件
+// -y: 或者--yes，自动确认
+// @baidumap/mcp-server-baidu-map: 要通过npx执行的npm包名称
+// BAIDU_MAP_API_KEY: 百度地图API密钥，用于身份验证和授权

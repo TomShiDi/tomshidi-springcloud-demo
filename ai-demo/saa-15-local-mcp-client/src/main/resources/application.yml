@@ -1,0 +1,34 @@
+server:
+  port: 8015
+  servlet:
+    # 大模型对话中文乱码UTF-8编码处理
+    encoding:
+      enabled: true
+      force: true
+      charset: UTF-8
+
+spring:
+  application:
+    name: SAA-local-mcp-client
+  output:
+    ansi:
+      enabled: always
+    # spring-alibaba-ai配置
+  ai:
+    dashscope:
+#      base-url: https://dashscope.aliyuncs.com
+      api-key: ${DASHSCOPE_API_KEY}
+      chat:
+        options:
+#           qwen-plus
+          model: deepseek-v3
+    mcp:
+      client:
+        type: sync
+        request-timeout: 20s
+        toolcallback:
+          enabled: true
+        sse:
+          connections:
+            mcp-server1:
+              url: http://localhost:8014
