@@ -26,6 +26,8 @@
         <module>saa-14-local-mcp-server</module>
         <module>saa-15-local-mcp-client</module>
         <module>saa-16-call-baidu-mcp</module>
+        <module>saa-17-bailiian-rag</module>
+        <module>saa-18-todo-menu</module>
     </modules>
 
     <properties>
